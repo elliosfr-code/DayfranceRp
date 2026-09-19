@@ -1,0 +1,6 @@
+[
+  { "id": "police", "nom": "Police Nationale (exemple)", "secteur": "Forces de l'ordre", "description": "Maintien de l'ordre et enquêtes. Remplacez ces exemples par vos vraies entreprises.", "recrutement": true,
+    "membres": [ { "steamid": "76561198000000000", "grade": "Brigadier" } ] },
+  { "id": "pompiers", "nom": "Sapeurs-Pompiers (exemple)", "secteur": "Secours", "description": "Interventions incendie et secours à la personne.", "recrutement": true, "membres": [] },
+  { "id": "concession", "nom": "Concession Auto (exemple)", "secteur": "Commerce", "description": "Vente et location de véhicules.", "recrutement": false, "membres": [] }
+]

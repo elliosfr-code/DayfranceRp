@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DayFranceRp – Serveur Serious RP sur Nova Life</title>
+<meta name="description" content="DayFranceRp, serveur Serious RP francophone sur Nova Life. Rejoignez-nous, connectez votre compte Steam et retrouvez votre entreprise.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--nuit:#0e1a2e;--nuit2:#16263f;--ligne:#2a3d5c;--texte:#e8ecf3;--doux:#9fb0c9;--bleu:#3b6ef0;--rouge:#e04a4a;--papier:#f3f1ec;--encre:#14203a}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--nuit);color:var(--texte);font:400 1rem/1.6 "Public Sans",system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque",Georgia,sans-serif;line-height:1.1;margin:0 0 .6em}
+a{color:inherit}:focus-visible{outline:3px solid var(--bleu);outline-offset:3px}
+header{position:sticky;top:0;z-index:5;background:rgba(14,26,46,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--ligne)}
+.bar{max-width:1080px;margin:auto;padding:.7rem 1.2rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.logo{font:800 1.25rem "Bricolage Grotesque",sans-serif;text-decoration:none;margin-right:auto}
+.logo i{font-style:normal;color:var(--rouge)}
+nav{display:flex;gap:.2rem;flex-wrap:wrap}
+nav a{padding:.45rem .8rem;border-radius:8px;text-decoration:none;color:var(--doux);font-weight:500}
+nav a[aria-current=page]{background:var(--nuit2);color:var(--texte);box-shadow:inset 0 -2px 0 var(--rouge)}
+.btn{display:inline-flex;align-items:center;gap:.5rem;border:0;border-radius:10px;padding:.7rem 1.1rem;font:600 .95rem "Public Sans",sans-serif;cursor:pointer;text-decoration:none;background:var(--bleu);color:#fff}
+.btn.sec{background:transparent;border:1px solid var(--ligne);color:var(--texte)}
+main{max-width:1080px;margin:auto;padding:2.5rem 1.2rem 4rem}
+section[hidden]{display:none}
+.hero{display:grid;grid-template-columns:1.2fr 1fr;gap:2.5rem;align-items:center;padding:1rem 0 2rem}
+.hero h1{font-size:clamp(2.4rem,6vw,4.2rem);font-weight:800}
+.hero p{color:var(--doux);max-width:46ch;font-size:1.1rem}
+.cta{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:1.4rem}
+.carte{background:var(--papier);color:var(--encre);border-radius:16px;padding:1.2rem 1.3rem;box-shadow:0 20px 50px rgba(0,0,0,.45);transform:rotate(-2deg);position:relative;overflow:hidden}
+.carte::before{content:"";position:absolute;inset:0 0 auto 0;height:9px;background:linear-gradient(90deg,#1f4fbf 33%,#fff 33% 66%,#e04a4a 66%)}
+.carte h3{font-size:1rem;margin:.5rem 0 1rem;letter-spacing:.02em}
+.id{display:flex;gap:1rem;align-items:center}
+.photo{width:92px;height:110px;border-radius:8px;background:#cfd6e4 center/cover;flex:none;display:grid;place-items:center;font-size:2rem;color:#7d8aa6}
+.champs{display:grid;gap:.15rem;font-size:.9rem;min-width:0}.champs b{font-size:1.15rem;word-break:break-word}
+.champs small{color:#55627d}
+.grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1rem}
+.bloc{background:var(--nuit2);border:1px solid var(--ligne);border-radius:12px;padding:1.2rem}
+.bloc h3{font-size:1.15rem}.bloc p{color:var(--doux);margin:.3rem 0}
+.tag{display:inline-block;font-size:.8rem;padding:.15rem .6rem;border-radius:99px;background:#1c3a2c;color:#7ce0a8;margin-top:.4rem}
+.tag.ferme{background:#3a2020;color:#f0a0a0}
+.moi{border-color:var(--bleu);box-shadow:0 0 0 1px var(--bleu)}
+ol.etapes{list-style:none;counter-reset:e;padding:0;display:grid;gap:.8rem;max-width:720px}
+ol.etapes li{counter-increment:e;display:grid;grid-template-columns:2.4rem 1fr;gap:1rem;background:var(--nuit2);border:1px solid var(--ligne);border-radius:12px;padding:1rem 1.2rem}
+ol.etapes li::before{content:counter(e);font:800 1.6rem "Bricolage Grotesque",sans-serif;color:var(--rouge)}
+ol.etapes b{display:block}ol.etapes span{color:var(--doux)}
+details{background:var(--nuit2);border:1px solid var(--ligne);border-radius:12px;padding:.9rem 1.2rem;margin-bottom:.7rem;max-width:760px}
+summary{cursor:pointer;font-weight:600}details p{color:var(--doux);margin:.6rem 0 0}
+.note{color:var(--doux);font-size:.9rem}
+footer{border-top:1px solid var(--ligne);padding:1.5rem 1.2rem;text-align:center;color:var(--doux);font-size:.9rem}
+@media(max-width:760px){.hero{grid-template-columns:1fr}.carte{transform:none}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header><div class="bar">
+  <a class="logo" href="#/" aria-label="DayFranceRp, accueil">Day<i>France</i>Rp</a>
+  <nav aria-label="Navigation principale">
+    <a href="#/">Accueil</a><a href="#/rejoindre">Nous rejoindre</a><a href="#/entreprises">Entreprises</a><a href="#/faq">FAQ</a><a href="#/discord">Discord</a>
+  </nav>
+  <span id="zone-compte"></span>
+</div></header>
+
+<main>
+<section id="accueil" data-page="/">
+  <div class="hero">
+    <div>
+      <h1>Un roleplay sérieux, une vie à écrire.</h1>
+      <p>DayFranceRp est un serveur Serious RP francophone sur Nova Life, fondé par un joueur actif sur le jeu depuis plus de 5 ans. Cadre strict, métiers structurés, staff disponible.</p>
+      <div class="cta"><a class="btn" href="#/rejoindre">Nous rejoindre</a><a class="btn sec" id="lien-discord-hero" href="#/discord">Ouvrir le Discord</a></div>
+    </div>
+    <div class="carte" aria-live="polite">
+      <h3>Carte de citoyen DayFranceRp</h3>
+      <div class="id"><div class="photo" id="carte-photo">?</div>
+        <div class="champs"><b id="carte-nom">Non connecté</b><small id="carte-sid">Connectez votre compte Steam pour l'activer.</small><small id="carte-ent"></small></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="rejoindre" data-page="/rejoindre" hidden>
+  <h2>Nous rejoindre</h2>
+  <ol class="etapes">
+    <li><div><b>Posséder Nova Life sur Steam</b><span>Le jeu doit être installé et à jour.</span></div></li>
+    <li><div><b>Rejoindre le Discord</b><span>Toutes les annonces, le support et les candidatures s'y trouvent.</span></div></li>
+    <li><div><b>Lire le règlement</b><span>Le Serious RP demande de le connaître avant de jouer.</span></div></li>
+    <li><div><b>Passer l'entretien avec le staff</b><span>Un court échange vocal pour valider votre arrivée.</span></div></li>
+    <li><div><b>Entrer en jeu</b><span>Créez votre personnage et connectez votre compte Steam ici pour retrouver votre entreprise.</span></div></li>
+  </ol>
+  <p class="note">Adaptez ces étapes à votre fonctionnement réel dans <code>index.html</code>.</p>
+</section>
+
+<section id="entreprises" data-page="/entreprises" hidden>
+  <h2>Entreprises</h2>
+  <div id="ent-moi"></div>
+  <div class="grille" id="ent-liste" aria-live="polite"><p class="note">Chargement…</p></div>
+</section>
+
+<section id="faq" data-page="/faq" hidden>
+  <h2>Questions fréquentes</h2>
+  <details><summary>Le serveur est-il gratuit ?</summary><p>Oui, l'accès au serveur est gratuit. Il faut simplement posséder Nova Life sur Steam.</p></details>
+  <details><summary>Que veut dire Serious RP ?</summary><p>Un roleplay cohérent : votre personnage a une histoire, vos actions ont des conséquences, et le règlement est appliqué de façon stricte et équitable.</p></details>
+  <details><summary>Pourquoi connecter mon compte Steam ?</summary><p>La connexion identifie votre profil sur le site et affiche votre entreprise et votre grade. Le site ne voit ni votre mot de passe ni vos jeux : Steam ne renvoie que votre identifiant public.</p></details>
+  <details><summary>Comment rejoindre une entreprise ?</summary><p>Consultez l'onglet Entreprises, repérez celles qui recrutent, puis postulez sur le Discord.</p></details>
+  <details><summary>Je suis sanctionné, que faire ?</summary><p>Ouvrez un ticket de support sur le Discord. Un membre du staff examinera votre demande.</p></details>
+</section>
+
+<section id="discord" data-page="/discord" hidden>
+  <h2>Discord</h2>
+  <div class="bloc" style="max-width:560px"><h3>Rejoignez la communauté</h3><p>Annonces, règlement, tickets de support, candidatures aux entreprises et discussions entre joueurs.</p>
+  <p><a class="btn" id="lien-discord" href="#" target="_blank" rel="noopener">Rejoindre le Discord</a></p></div>
+</section>
+</main>
+<footer>DayFranceRp – serveur communautaire, non affilié à Nova Life ni à Valve.</footer>
+
+<script>
+/* ====== À MODIFIER ====== */
+const CONFIG = {
+  DISCORD: "https://discord.gg/VOTRE-INVITATION",
+  WORKER:  "https://dayfrance-auth.VOTRE-COMPTE.workers.dev"
+};
+/* ======================== */
+const $ = (s) => document.querySelector(s);
+const esc = (t) => String(t ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+$("#lien-discord").href = CONFIG.DISCORD;
+
+// ---- session Steam
+function lireToken(t){ try{ const p=JSON.parse(decodeURIComponent(escape(atob(t.split(".")[0].replace(/-/g,"+").replace(/_/g,"/"))))); return p.exp*1000>Date.now()?p:null; }catch{ return null; } }
+function session(){ const t=localStorage.getItem("dfr_token"); return t?lireToken(t):null; }
+function deconnexion(){ localStorage.removeItem("dfr_token"); location.hash="#/"; location.reload(); }
+if (location.hash.startsWith("#/auth/")) { const t=location.hash.slice(7); if (lireToken(t)) localStorage.setItem("dfr_token", t); history.replaceState(null,"",location.pathname+"#/entreprises"); }
+
+let entreprises = [];
+function afficherCompte(){
+  const s = session(), z = $("#zone-compte");
+  if (!s) { z.innerHTML = `<a class="btn sec" href="${esc(CONFIG.WORKER)}/login">Se connecter avec Steam</a>`; return; }
+  z.innerHTML = `<button class="btn sec" id="btn-out" title="Se déconnecter">${esc(s.name)} · Déconnexion</button>`;
+  $("#btn-out").onclick = deconnexion;
+}
+function maCarriere(){
+  const s = session(); if (!s) return null;
+  for (const e of entreprises){ const m=(e.membres||[]).find(m=>m.steamid===s.sid); if (m) return {entreprise:e, grade:m.grade}; }
+  return null;
+}
+function afficherCarte(){
+  const s = session(); if (!s) return;
+  $("#carte-nom").textContent = s.name;
+  $("#carte-sid").textContent = "Steam ID : " + s.sid;
+  if (s.avatar){ const p=$("#carte-photo"); p.style.backgroundImage=`url("${s.avatar}")`; p.textContent=""; }
+  const c = maCarriere();
+  $("#carte-ent").textContent = c ? `${c.entreprise.nom} – ${c.grade}` : "Aucune entreprise liée à ce compte";
+}
+function afficherEntreprises(){
+  const c = maCarriere(), s = session();
+  $("#ent-moi").innerHTML = !s ? `<div class="bloc" style="margin-bottom:1rem"><h3>Retrouvez votre entreprise</h3><p>Connectez votre compte Steam pour voir votre entreprise et votre grade.</p><a class="btn" href="${esc(CONFIG.WORKER)}/login">Se connecter avec Steam</a></div>`
+    : c ? `<div class="bloc moi" style="margin-bottom:1rem"><h3>Votre entreprise : ${esc(c.entreprise.nom)}</h3><p>Grade : ${esc(c.grade)}</p></div>`
+    : `<div class="bloc" style="margin-bottom:1rem"><h3>Vous n'avez pas encore d'entreprise</h3><p>Choisissez une entreprise qui recrute ci-dessous et postulez sur le Discord.</p></div>`;
+  $("#ent-liste").innerHTML = entreprises.length ? entreprises.map(e => `<article class="bloc${c&&c.entreprise.id===e.id?" moi":""}"><h3>${esc(e.nom)}</h3><p>${esc(e.secteur)}</p><p>${esc(e.description)}</p><span class="tag${e.recrutement?"":" ferme"}">${e.recrutement?"Recrute":"Recrutement fermé"}</span></article>`).join("") : `<p class="note">Aucune entreprise pour le moment.</p>`;
+}
+fetch("data/entreprises.json").then(r=>r.json()).then(d=>{ entreprises=d; afficherCarte(); afficherEntreprises(); }).catch(()=>{ $("#ent-liste").innerHTML=`<p class="note">Impossible de charger la liste des entreprises.</p>`; });
+
+// ---- onglets (routage par #)
+function route(){
+  const page = "/" + (location.hash.replace(/^#\/?/,"").split("/")[0] || "");
+  const cible = document.querySelector(`section[data-page="${page}"]`) ? page : "/";
+  document.querySelectorAll("section[data-page]").forEach(s => s.hidden = s.dataset.page !== cible);
+  document.querySelectorAll("nav a").forEach(a => { const h="/"+a.getAttribute("href").replace(/^#\/?/,""); a.toggleAttribute("aria-current", h===cible); if(h===cible) a.setAttribute("aria-current","page"); });
+  window.scrollTo(0,0);
+}
+addEventListener("hashchange", route); afficherCompte(); afficherCarte(); route();
+</script>
+</body>
+</html>

@@ -4,170 +4,269 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DayFranceRp – Serveur Serious RP sur Nova Life</title>
-<meta name="description" content="DayFranceRp, serveur Serious RP francophone sur Nova Life. Rejoignez-nous, connectez votre compte Steam et retrouvez votre entreprise.">
+<link rel="icon" href="images/logo.jpg">
+<meta name="description" content="DayFranceRp, serveur Serious RP francophone sur Nova Life : entreprises, métiers, économie et communauté. Rejoignez-nous.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--nuit:#0e1a2e;--nuit2:#16263f;--ligne:#2a3d5c;--texte:#e8ecf3;--doux:#9fb0c9;--bleu:#3b6ef0;--rouge:#e04a4a;--papier:#f3f1ec;--encre:#14203a}
-*{box-sizing:border-box}html{scroll-behavior:smooth}
-body{margin:0;background:var(--nuit);color:var(--texte);font:400 1rem/1.6 "Public Sans",system-ui,sans-serif}
-h1,h2,h3{font-family:"Bricolage Grotesque",Georgia,sans-serif;line-height:1.1;margin:0 0 .6em}
+:root{--nuit:#0b1526;--n2:#13233c;--ligne:#26395a;--txt:#e8ecf3;--doux:#9fb0c9;--bleu:#3b6ef0;--rouge:#e04a4a}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--nuit);color:var(--txt);font:400 1rem/1.6 "Public Sans",system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque",Georgia,sans-serif;line-height:1.05;margin:0 0 .5em}
 a{color:inherit}:focus-visible{outline:3px solid var(--bleu);outline-offset:3px}
-header{position:sticky;top:0;z-index:5;background:rgba(14,26,46,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--ligne)}
-.bar{max-width:1080px;margin:auto;padding:.7rem 1.2rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
-.logo{font:800 1.25rem "Bricolage Grotesque",sans-serif;text-decoration:none;margin-right:auto}
-.logo i{font-style:normal;color:var(--rouge)}
-nav{display:flex;gap:.2rem;flex-wrap:wrap}
-nav a{padding:.45rem .8rem;border-radius:8px;text-decoration:none;color:var(--doux);font-weight:500}
-nav a[aria-current=page]{background:var(--nuit2);color:var(--texte);box-shadow:inset 0 -2px 0 var(--rouge)}
-.btn{display:inline-flex;align-items:center;gap:.5rem;border:0;border-radius:10px;padding:.7rem 1.1rem;font:600 .95rem "Public Sans",sans-serif;cursor:pointer;text-decoration:none;background:var(--bleu);color:#fff}
-.btn.sec{background:transparent;border:1px solid var(--ligne);color:var(--texte)}
-main{max-width:1080px;margin:auto;padding:2.5rem 1.2rem 4rem}
-section[hidden]{display:none}
-.hero{display:grid;grid-template-columns:1.2fr 1fr;gap:2.5rem;align-items:center;padding:1rem 0 2rem}
-.hero h1{font-size:clamp(2.4rem,6vw,4.2rem);font-weight:800}
-.hero p{color:var(--doux);max-width:46ch;font-size:1.1rem}
-.cta{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:1.4rem}
-.carte{background:var(--papier);color:var(--encre);border-radius:16px;padding:1.2rem 1.3rem;box-shadow:0 20px 50px rgba(0,0,0,.45);transform:rotate(-2deg);position:relative;overflow:hidden}
-.carte::before{content:"";position:absolute;inset:0 0 auto 0;height:9px;background:linear-gradient(90deg,#1f4fbf 33%,#fff 33% 66%,#e04a4a 66%)}
-.carte h3{font-size:1rem;margin:.5rem 0 1rem;letter-spacing:.02em}
-.id{display:flex;gap:1rem;align-items:center}
-.photo{width:92px;height:110px;border-radius:8px;background:#cfd6e4 center/cover;flex:none;display:grid;place-items:center;font-size:2rem;color:#7d8aa6}
-.champs{display:grid;gap:.15rem;font-size:.9rem;min-width:0}.champs b{font-size:1.15rem;word-break:break-word}
-.champs small{color:#55627d}
-.grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1rem}
-.bloc{background:var(--nuit2);border:1px solid var(--ligne);border-radius:12px;padding:1.2rem}
-.bloc h3{font-size:1.15rem}.bloc p{color:var(--doux);margin:.3rem 0}
-.tag{display:inline-block;font-size:.8rem;padding:.15rem .6rem;border-radius:99px;background:#1c3a2c;color:#7ce0a8;margin-top:.4rem}
-.tag.ferme{background:#3a2020;color:#f0a0a0}
-.moi{border-color:var(--bleu);box-shadow:0 0 0 1px var(--bleu)}
-ol.etapes{list-style:none;counter-reset:e;padding:0;display:grid;gap:.8rem;max-width:720px}
-ol.etapes li{counter-increment:e;display:grid;grid-template-columns:2.4rem 1fr;gap:1rem;background:var(--nuit2);border:1px solid var(--ligne);border-radius:12px;padding:1rem 1.2rem}
-ol.etapes li::before{content:counter(e);font:800 1.6rem "Bricolage Grotesque",sans-serif;color:var(--rouge)}
-ol.etapes b{display:block}ol.etapes span{color:var(--doux)}
-details{background:var(--nuit2);border:1px solid var(--ligne);border-radius:12px;padding:.9rem 1.2rem;margin-bottom:.7rem;max-width:760px}
+header{position:fixed;inset:0 0 auto 0;z-index:20;background:linear-gradient(#0b1526ee,#0b152600);transition:background .3s}
+header.plein{background:#0b1526f2;border-bottom:1px solid var(--ligne)}
+.bar{max-width:1180px;margin:auto;padding:.8rem 1.2rem;display:flex;align-items:center;gap:1rem}
+.logo{font:800 1.3rem "Bricolage Grotesque",sans-serif;text-decoration:none;margin-right:auto}.logo{display:flex;align-items:center;gap:.6rem}.lg{width:38px;height:38px;border-radius:50%;object-fit:cover;border:2px solid #ffffff40}.logo i{font-style:normal;color:var(--rouge)}
+nav{display:flex;gap:.1rem}nav a{padding:.4rem .75rem;border-radius:8px;text-decoration:none;color:#cbd6e8;font-weight:500;font-size:.95rem}nav a:hover{background:#ffffff14}
+.btn{display:inline-flex;align-items:center;gap:.5rem;border:0;border-radius:10px;padding:.75rem 1.3rem;font:600 .95rem "Public Sans",sans-serif;cursor:pointer;text-decoration:none;background:var(--bleu);color:#fff;transition:transform .15s,background .15s}
+.btn:hover{transform:translateY(-2px);background:#2f5fd8}.btn.sec{background:#ffffff14;border:1px solid #ffffff40}.btn.sm{padding:.45rem .9rem;font-size:.85rem}
+.moi{display:flex;align-items:center;gap:.5rem}.moi img{width:30px;height:30px;border-radius:50%}
+/* hero + diaporama */
+#hero{position:relative;min-height:100vh;display:grid;align-items:center;overflow:hidden}
+.slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.2s;transform:scale(1.04)}
+.slide.on{opacity:1;animation:zoom 9s linear forwards}
+@keyframes zoom{to{transform:scale(1.14)}}
+.slide.vide{background-color:#10203a}
+.slide.vide::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 55%,#050b16 100%),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 200' preserveAspectRatio='none'%3E%3Cpath fill='%23081222' d='M0 200V120h60V80h50v50h40V60h70v90h50V100h60v40h70V70h60v80h50V90h80v60h60V50h60v100h70V110h60v90z'/%3E%3C/svg%3E") bottom/100% 32% no-repeat}
+.slide.g0.vide{background-image:linear-gradient(160deg,#1b3b7a,#e0805a 90%)}.slide.g1.vide{background-image:linear-gradient(160deg,#0d1e3d,#3b6ef0 95%)}
+.slide.g2.vide{background-image:linear-gradient(160deg,#2a1230,#e04a4a 95%)}.slide.g3.vide{background-image:linear-gradient(160deg,#08201f,#2fa39a 95%)}
+#hero::before{content:"";position:absolute;inset:0;z-index:2;background:linear-gradient(90deg,#0b1526e6 25%,#0b152640 75%),linear-gradient(transparent 60%,var(--nuit))}
+.hc{position:relative;z-index:3;max-width:1180px;margin:auto;padding:6rem 1.2rem 5rem;width:100%}
+.badge{display:inline-flex;gap:.5rem;align-items:center;background:#ffffff14;border:1px solid #ffffff30;border-radius:99px;padding:.3rem .9rem;font-size:.9rem;margin-bottom:1.2rem}
+.badge b{width:9px;height:9px;border-radius:50%;background:#3ddc84;box-shadow:0 0 0 4px #3ddc8433}
+#hero h1{font-size:clamp(3rem,9vw,6.5rem);font-weight:800;margin-bottom:.2em}#hero h1 i{font-style:normal;color:var(--rouge)}
+#hero p.sub{font-size:1.2rem;color:#d3dcec;max-width:44ch}
+.cta{display:flex;gap:.8rem;flex-wrap:wrap;margin:1.6rem 0 2.5rem}
+.stats{display:flex;gap:2.5rem;flex-wrap:wrap}.stats div{border-left:3px solid var(--rouge);padding-left:.9rem}
+.stats b{display:block;font:800 2rem "Bricolage Grotesque",sans-serif}.stats span{color:var(--doux);font-size:.9rem}
+.ctrl{position:absolute;z-index:4;right:1.2rem;bottom:1.6rem;display:flex;gap:.5rem;align-items:center}
+.ctrl button{width:42px;height:42px;border-radius:50%;border:1px solid #ffffff50;background:#0b152680;color:#fff;font-size:1.2rem;cursor:pointer}
+.pts{display:flex;gap:.4rem;margin-right:.6rem}.pts i{width:9px;height:9px;border-radius:50%;background:#ffffff50;cursor:pointer}.pts i.on{background:#fff;width:24px;border-radius:5px}
+/* sections */
+section.s{max-width:1180px;margin:auto;padding:5rem 1.2rem 1rem}
+section.s>h2{font-size:clamp(2rem,4vw,3rem)}section.s>.lead{color:var(--doux);max-width:60ch;margin:-.2rem 0 2rem;font-size:1.1rem}
+.grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem}
+.bloc{background:var(--n2);border:1px solid var(--ligne);border-radius:14px;padding:1.4rem;transition:transform .2s,border-color .2s}
+.bloc:hover{transform:translateY(-4px);border-color:var(--bleu)}.bloc h3{font-size:1.2rem}.bloc p{color:var(--doux);margin:.3rem 0}
+.ico{width:46px;height:46px;border-radius:12px;background:#3b6ef022;display:grid;place-items:center;margin-bottom:.9rem;color:#8fb0ff}
+.ico svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tag{display:inline-block;font-size:.8rem;padding:.15rem .6rem;border-radius:99px;background:#1c3a2c;color:#7ce0a8;margin-top:.5rem}.tag.no{background:#3a2020;color:#f0a0a0}
+.mine{border-color:var(--bleu);box-shadow:0 0 0 1px var(--bleu)}
+/* galerie défilante */
+.marq{overflow:hidden;margin:0 -1.2rem;mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.piste{display:flex;gap:1rem;width:max-content;animation:defile 50s linear infinite}.marq:hover .piste{animation-play-state:paused}
+@keyframes defile{to{transform:translateX(-50%)}}
+.tuile{width:340px;height:210px;border-radius:14px;background-size:cover;background-position:center;position:relative;overflow:hidden;flex:none;border:1px solid var(--ligne)}
+.tuile span{position:absolute;left:0;right:0;bottom:0;padding:1.6rem .9rem .6rem;background:linear-gradient(transparent,#050b16e6);font-weight:600}
+.tuile.vide.g0{background-image:linear-gradient(160deg,#1b3b7a,#e0805a)}.tuile.vide.g1{background-image:linear-gradient(160deg,#0d1e3d,#3b6ef0)}.tuile.vide.g2{background-image:linear-gradient(160deg,#2a1230,#e04a4a)}.tuile.vide.g3{background-image:linear-gradient(160deg,#08201f,#2fa39a)}
+/* citoyen, étapes, équipe, faq */
+.carte{display:none;gap:1rem;align-items:center;background:#f3f1ec;color:#14203a;border-radius:14px;padding:1rem 1.2rem;margin-bottom:1.2rem;max-width:520px;border-top:8px solid;border-image:linear-gradient(90deg,#1f4fbf 33%,#fff 33% 66%,#e04a4a 66%) 1}
+.carte.on{display:flex}.carte img{width:70px;height:84px;object-fit:cover;border-radius:8px}.carte b{font-size:1.15rem}.carte small{display:block;color:#55627d}
+ol.etapes{list-style:none;counter-reset:e;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+ol.etapes li{counter-increment:e;background:var(--n2);border:1px solid var(--ligne);border-radius:14px;padding:1.2rem}
+ol.etapes li::before{content:counter(e);display:block;font:800 2.4rem "Bricolage Grotesque",sans-serif;color:var(--rouge)}
+ol.etapes b{display:block}ol.etapes span{color:var(--doux);font-size:.95rem}
+.staff{text-align:center}.staff .av{width:72px;height:72px;border-radius:50%;margin:0 auto .7rem;background:linear-gradient(135deg,var(--bleu),var(--rouge));display:grid;place-items:center;font:800 1.5rem "Bricolage Grotesque",sans-serif}
+.staff small{color:#8fb0ff}
+details{background:var(--n2);border:1px solid var(--ligne);border-radius:12px;padding:.9rem 1.2rem;margin-bottom:.7rem;max-width:800px}
 summary{cursor:pointer;font-weight:600}details p{color:var(--doux);margin:.6rem 0 0}
-.note{color:var(--doux);font-size:.9rem}
-footer{border-top:1px solid var(--ligne);padding:1.5rem 1.2rem;text-align:center;color:var(--doux);font-size:.9rem}
-@media(max-width:760px){.hero{grid-template-columns:1fr}.carte{transform:none}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+.appel{margin:5rem auto 0;max-width:1180px;padding:0 1.2rem}
+.appel>div{border-radius:20px;padding:3rem 2rem;text-align:center;background:linear-gradient(135deg,#1f3f8f,#3b6ef0 60%,#7a4fd8)}
+.appel h2{font-size:clamp(2rem,4vw,3rem)}.appel p{max-width:50ch;margin:0 auto 1.4rem;color:#e6ecff}
+footer{margin-top:4rem;border-top:1px solid var(--ligne);padding:1.6rem 1.2rem;text-align:center;color:var(--doux);font-size:.9rem}
+@media(max-width:820px){nav{display:none}#hero::before{background:linear-gradient(#0b1526cc,#0b1526cc),linear-gradient(transparent 60%,var(--nuit))}.tuile{width:260px;height:170px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.slide.on,.piste{animation:none}}
+.log{max-width:420px;display:grid;gap:.8rem}.log label{display:grid;gap:.3rem;font-weight:500}
+input,select{background:#0b1526;border:1px solid var(--ligne);border-radius:10px;color:var(--txt);padding:.65rem .8rem;font:inherit;width:100%}
+.err{color:#ff9b9b;min-height:1.4em;margin:0}.top{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-bottom:1.2rem}.top span{margin-right:auto}
+.plan{display:grid;grid-template-columns:repeat(7,minmax(130px,1fr));gap:.6rem;overflow-x:auto;padding-bottom:.5rem}
+.jour{background:var(--n2);border:1px solid var(--ligne);border-radius:12px;padding:.7rem;min-height:120px}.jour h3{font-size:1rem;margin:0 0 .5rem}
+.cr{background:#3b6ef01f;border-left:3px solid var(--bleu);border-radius:6px;padding:.4rem .5rem;margin-bottom:.4rem;font-size:.88rem;position:relative}
+.cr b{display:block}.cr small{color:var(--doux)}.cr button{position:absolute;top:2px;right:4px;background:0;border:0;color:#ff9b9b;font-size:1.1rem;cursor:pointer}
+.ajout{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.6rem;margin-top:1.2rem;align-items:end}
+@media(max-width:820px){.plan{grid-template-columns:repeat(7,150px)}}
 </style>
 </head>
 <body>
-<header><div class="bar">
-  <a class="logo" href="#/" aria-label="DayFranceRp, accueil">Day<i>France</i>Rp</a>
-  <nav aria-label="Navigation principale">
-    <a href="#/">Accueil</a><a href="#/rejoindre">Nous rejoindre</a><a href="#/entreprises">Entreprises</a><a href="#/faq">FAQ</a><a href="#/discord">Discord</a>
-  </nav>
-  <span id="zone-compte"></span>
+<header id="haut"><div class="bar">
+  <a class="logo" href="#hero" aria-label="DayFranceRp"><img src="images/logo.jpg" alt="" class="lg" onerror="this.style.display='none'">Day<i>France</i>Rp</a>
+  <nav aria-label="Navigation"><a href="#serveur">Le serveur</a><a href="#galerie">Galerie</a><a href="#entreprises">Entreprises</a><a href="#rejoindre">Nous rejoindre</a><a href="#equipe">Équipe</a><a href="#faq">FAQ</a><a href="#espace">Espace staff</a></nav>
+  <span id="compte"></span>
 </div></header>
 
-<main>
-<section id="accueil" data-page="/">
-  <div class="hero">
-    <div>
-      <h1>Un roleplay sérieux, une vie à écrire.</h1>
-      <p>DayFranceRp est un serveur Serious RP francophone sur Nova Life, fondé par un joueur actif sur le jeu depuis plus de 5 ans. Cadre strict, métiers structurés, staff disponible.</p>
-      <div class="cta"><a class="btn" href="#/rejoindre">Nous rejoindre</a><a class="btn sec" id="lien-discord-hero" href="#/discord">Ouvrir le Discord</a></div>
+<section id="hero" aria-label="Présentation">
+  <div id="slides"></div>
+  <div class="hc">
+    <span class="badge"><b></b><span id="badge-txt">Serveur Serious RP · Nova Life</span></span>
+    <span class="badge" id="badge-staff" hidden style="margin-left:.5rem"><b></b><span></span></span>
+    <h1>Day<i>France</i>Rp</h1>
+    <p class="sub">Un roleplay sérieux, des entreprises vivantes et une communauté francophone qui écrit son histoire depuis plus de 5 ans d'expérience sur Nova Life.</p>
+    <div class="cta"><a class="btn" href="#rejoindre">Nous rejoindre</a><a class="btn sec" id="d1" target="_blank" rel="noopener">Rejoindre le Discord</a></div>
+    <div class="stats">
+      <div><b id="st-m">—</b><span>membres Discord</span></div>
+      <div><b id="st-o">—</b><span>en ligne</span></div>
+      <div><b id="st-e">—</b><span>entreprises</span></div>
+      <div><b>5+</b><span>ans d'expérience</span></div>
     </div>
-    <div class="carte" aria-live="polite">
-      <h3>Carte de citoyen DayFranceRp</h3>
-      <div class="id"><div class="photo" id="carte-photo">?</div>
-        <div class="champs"><b id="carte-nom">Non connecté</b><small id="carte-sid">Connectez votre compte Steam pour l'activer.</small><small id="carte-ent"></small></div></div>
-    </div>
+  </div>
+  <div class="ctrl"><div class="pts" id="pts"></div><button id="prec" aria-label="Photo précédente">‹</button><button id="suiv" aria-label="Photo suivante">›</button></div>
+</section>
+
+<section class="s" id="serveur">
+  <h2>Le serveur</h2><p class="lead">Un cadre strict, une économie cohérente et des joueurs investis : ici, chaque personnage compte.</p>
+  <div class="grille">
+    <div class="bloc"><div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div><h3>Serious RP</h3><p>Règlement clair, appliqué de façon équitable, avec une modération active.</p></div>
+    <div class="bloc"><div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2M3 13h18"/></svg></div><h3>Métiers et entreprises</h3><p>Forces de l'ordre, secours, commerces, concessions : trouvez votre place.</p></div>
+    <div class="bloc"><div class="ico"><svg viewBox="0 0 24 24"><path d="M3 10l9-6 9 6M5 10v9M19 10v9M9 10v9M15 10v9M3 21h18"/></svg></div><h3>Économie et banque</h3><p>Banque, ATM, virements et historique : une vraie vie économique.</p></div>
+    <div class="bloc"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3-5.5 6.5-5.5s5.9 1.9 6.5 5.5M16 5a3.5 3.5 0 010 7M18 14.8c2 .6 3.2 2.4 3.5 5.2"/></svg></div><h3>Communauté active</h3><p>Un staff disponible et une équipe soudée, sur le jeu comme sur Discord.</p></div>
   </div>
 </section>
 
-<section id="rejoindre" data-page="/rejoindre" hidden>
-  <h2>Nous rejoindre</h2>
+<section class="s" id="galerie">
+  <h2>Galerie</h2><p class="lead">Un aperçu de la vie à DayFranceRp.</p>
+  <p class="err" id="diag" hidden></p>
+  <div class="marq"><div class="piste" id="piste"></div></div>
+</section>
+
+<section class="s" id="entreprises">
+  <h2>Entreprises</h2><p class="lead">Les entreprises du serveur. Connectez votre compte Steam pour retrouver la vôtre.</p>
+  <div class="carte" id="carte"><img id="c-av" alt=""><div><b id="c-nom"></b><small id="c-sid"></small><small id="c-ent"></small></div></div>
+  <div class="grille" id="ent"></div>
+</section>
+
+<section class="s" id="rejoindre">
+  <h2>Nous rejoindre</h2><p class="lead">Cinq étapes pour entrer en jeu.</p>
   <ol class="etapes">
-    <li><div><b>Posséder Nova Life sur Steam</b><span>Le jeu doit être installé et à jour.</span></div></li>
-    <li><div><b>Rejoindre le Discord</b><span>Toutes les annonces, le support et les candidatures s'y trouvent.</span></div></li>
-    <li><div><b>Lire le règlement</b><span>Le Serious RP demande de le connaître avant de jouer.</span></div></li>
-    <li><div><b>Passer l'entretien avec le staff</b><span>Un court échange vocal pour valider votre arrivée.</span></div></li>
-    <li><div><b>Entrer en jeu</b><span>Créez votre personnage et connectez votre compte Steam ici pour retrouver votre entreprise.</span></div></li>
+    <li><b>Posséder Nova Life</b><span>Le jeu doit être installé sur Steam.</span></li>
+    <li><b>Rejoindre le Discord</b><span>Annonces, support et candidatures.</span></li>
+    <li><b>Lire le règlement</b><span>Indispensable en Serious RP.</span></li>
+    <li><b>Entretien avec le staff</b><span>Un court échange vocal.</span></li>
+    <li><b>Entrer en jeu</b><span>Créez votre personnage et postulez à une entreprise.</span></li>
   </ol>
-  <p class="note">Adaptez ces étapes à votre fonctionnement réel dans <code>index.html</code>.</p>
 </section>
 
-<section id="entreprises" data-page="/entreprises" hidden>
-  <h2>Entreprises</h2>
-  <div id="ent-moi"></div>
-  <div class="grille" id="ent-liste" aria-live="polite"><p class="note">Chargement…</p></div>
+<section class="s" id="equipe">
+  <h2>L'équipe</h2><p class="lead">Ceux qui font vivre le serveur.</p>
+  <div class="grille" id="staff"></div>
 </section>
 
-<section id="faq" data-page="/faq" hidden>
-  <h2>Questions fréquentes</h2>
-  <details><summary>Le serveur est-il gratuit ?</summary><p>Oui, l'accès au serveur est gratuit. Il faut simplement posséder Nova Life sur Steam.</p></details>
-  <details><summary>Que veut dire Serious RP ?</summary><p>Un roleplay cohérent : votre personnage a une histoire, vos actions ont des conséquences, et le règlement est appliqué de façon stricte et équitable.</p></details>
-  <details><summary>Pourquoi connecter mon compte Steam ?</summary><p>La connexion identifie votre profil sur le site et affiche votre entreprise et votre grade. Le site ne voit ni votre mot de passe ni vos jeux : Steam ne renvoie que votre identifiant public.</p></details>
-  <details><summary>Comment rejoindre une entreprise ?</summary><p>Consultez l'onglet Entreprises, repérez celles qui recrutent, puis postulez sur le Discord.</p></details>
-  <details><summary>Je suis sanctionné, que faire ?</summary><p>Ouvrez un ticket de support sur le Discord. Un membre du staff examinera votre demande.</p></details>
+<section class="s" id="faq">
+  <h2>FAQ</h2>
+  <details><summary>Le serveur est-il gratuit ?</summary><p>Oui, il suffit de posséder Nova Life sur Steam.</p></details>
+  <details><summary>Que veut dire Serious RP ?</summary><p>Un roleplay cohérent : votre personnage a une histoire et vos actions ont des conséquences.</p></details>
+  <details><summary>Pourquoi connecter mon compte Steam ?</summary><p>Pour afficher votre profil, votre entreprise et votre grade sur le site. Steam ne transmet que votre identifiant public.</p></details>
+  <details><summary>Comment rejoindre une entreprise ?</summary><p>Repérez celles qui recrutent puis postulez sur le Discord.</p></details>
+  <details><summary>Je suis sanctionné, que faire ?</summary><p>Ouvrez un ticket de support sur le Discord.</p></details>
 </section>
 
-<section id="discord" data-page="/discord" hidden>
-  <h2>Discord</h2>
-  <div class="bloc" style="max-width:560px"><h3>Rejoignez la communauté</h3><p>Annonces, règlement, tickets de support, candidatures aux entreprises et discussions entre joueurs.</p>
-  <p><a class="btn" id="lien-discord" href="#" target="_blank" rel="noopener">Rejoindre le Discord</a></p></div>
+<section class="s" id="espace">
+  <h2>Espace staff</h2><p class="lead">Accès réservé à l'équipe : connexion avec votre identifiant, puis planning du staff.</p>
+  <div id="espace-zone"></div>
 </section>
-</main>
-<footer>DayFranceRp – serveur DayFranceRp, Nova life.</footer>
+
+<div class="appel"><div><h2>Prêt à écrire ton histoire ?</h2><p>Rejoins la communauté DayFranceRp et lance-toi dans l'aventure.</p><a class="btn sec" id="d2" target="_blank" rel="noopener">Rejoindre le Discord</a></div></div>
+<footer>DayFranceRp – serveur communautaire, non affilié à Nova Life ni à Valve.</footer>
 
 <script>
 /* ====== À MODIFIER ====== */
 const CONFIG = {
-  DISCORD: "https://discord.gg/czrW43wduE",
-  WORKER:  "https://dayfrance-auth.elliosfr.workers.dev"
+  DISCORD: "https://discord.gg/VOTRE-INVITATION",   // lien d'invitation
+  DISCORD_CODE: "VOTRE-INVITATION",                  // la partie après discord.gg/ (pour les compteurs)
+  WORKER: "https://dayfrance-auth.VOTRE-COMPTE.workers.dev",
+  // Vos captures d'écran : déposez-les dans le dossier images/ puis listez-les ici
+  PHOTOS: [
+    { img: "images/1.jpg", titre: "Le centre-ville au crépuscule" },
+    { img: "images/2.jpg", titre: "Balade devant la Tour Eiffel" },
+    { img: "images/3.jpg", titre: "Le staff devant la mairie" },
+    { img: "images/4.jpg", titre: "Rues et parking du village" },
+    { img: "images/5.jpg", titre: "Travail à la ferme" },
+    { img: "images/6.jpg", titre: "Soirée entre joueurs" }
+  ]
 };
 /* ======================== */
-const $ = (s) => document.querySelector(s);
-const esc = (t) => String(t ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-$("#lien-discord").href = CONFIG.DISCORD;
+const $ = s => document.querySelector(s);
+const esc = t => String(t ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+$("#d1").href = $("#d2").href = CONFIG.DISCORD;
+addEventListener("scroll", () => $("#haut").classList.toggle("plein", scrollY > 30), {passive:true});
+
+// ---- diaporama + galerie (image manquante = décor de secours)
+const P = CONFIG.PHOTOS;
+$("#slides").innerHTML = P.map((p,i)=>`<div class="slide g${i%4}" role="img" aria-label="${esc(p.titre)}"></div>`).join("");
+$("#pts").innerHTML = P.map((_,i)=>`<i data-i="${i}"></i>`).join("");
+$("#piste").innerHTML = [...P,...P].map((p,i)=>`<div class="tuile g${i%4}"><span>${esc(p.titre)}</span></div>`).join("");
+const slides = [...document.querySelectorAll(".slide")], pts = [...document.querySelectorAll(".pts i")], tuiles = [...document.querySelectorAll(".tuile")];
+const manque=[];
+P.forEach((p,i)=>{ const l=[p.img,p.img.replace(/^images\//,""),"site/"+p.img]; let k=0; const im=new Image();
+  im.onload=()=>{ slides[i].style.backgroundImage=`url("${l[k]}")`; [tuiles[i],tuiles[i+P.length]].forEach(t=>t.style.backgroundImage=`url("${l[k]}")`); };
+  im.onerror=()=>{ if(++k<l.length){ im.src=l[k]; return; }
+    slides[i].classList.add("vide"); [tuiles[i],tuiles[i+P.length]].forEach(t=>t.classList.add("vide")); manque.push(p.img); console.warn("Photo introuvable :",p.img);
+    $("#diag").hidden=false; $("#diag").textContent="Photos introuvables ("+manque.join(", ")+") : vérifiez que le dossier images/ est bien envoyé sur GitHub, à côté de index.html."; };
+  im.src=l[0]; });
+let cur = 0, timer;
+function aller(n){ cur=(n+P.length)%P.length; slides.forEach((s,i)=>{ s.classList.remove("on"); if(i===cur){ void s.offsetWidth; s.classList.add("on"); } }); pts.forEach((d,i)=>d.classList.toggle("on",i===cur)); }
+function auto(){ clearInterval(timer); timer=setInterval(()=>aller(cur+1),6000); }
+$("#prec").onclick=()=>{aller(cur-1);auto();}; $("#suiv").onclick=()=>{aller(cur+1);auto();};
+$("#pts").onclick=e=>{ if(e.target.dataset.i){ aller(+e.target.dataset.i); auto(); } };
+aller(0); auto();
+
+fetch(CONFIG.WORKER+"/service/public").then(r=>r.json()).then(d=>{ if(typeof d.count==="number"){ $("#badge-staff").hidden=false; $("#badge-staff span").textContent=d.count?`${d.count} staff en service`:"Aucun staff en service"; } }).catch(()=>{});
+// ---- compteurs Discord
+fetch(`https://discord.com/api/v9/invites/${CONFIG.DISCORD_CODE}?with_counts=true`).then(r=>r.json()).then(d=>{
+  if (d.approximate_member_count){ $("#st-m").textContent=d.approximate_member_count.toLocaleString("fr-FR"); $("#st-o").textContent=d.approximate_presence_count.toLocaleString("fr-FR"); $("#badge-txt").textContent=`${d.approximate_presence_count} joueurs en ligne sur le Discord`; }
+}).catch(()=>{});
 
 // ---- session Steam
-function lireToken(t){ try{ const p=JSON.parse(decodeURIComponent(escape(atob(t.split(".")[0].replace(/-/g,"+").replace(/_/g,"/"))))); return p.exp*1000>Date.now()?p:null; }catch{ return null; } }
-function session(){ const t=localStorage.getItem("dfr_token"); return t?lireToken(t):null; }
-function deconnexion(){ localStorage.removeItem("dfr_token"); location.hash="#/"; location.reload(); }
-if (location.hash.startsWith("#/auth/")) { const t=location.hash.slice(7); if (lireToken(t)) localStorage.setItem("dfr_token", t); history.replaceState(null,"",location.pathname+"#/entreprises"); }
+function lire(t){ try{ const p=JSON.parse(decodeURIComponent(escape(atob(t.split(".")[0].replace(/-/g,"+").replace(/_/g,"/"))))); return p.exp*1000>Date.now()?p:null; }catch{ return null; } }
+if (location.hash.startsWith("#/auth/")){ const t=location.hash.slice(7); if(lire(t)) localStorage.setItem("dfr_token",t); history.replaceState(null,"",location.pathname+"#entreprises"); }
+const tok = localStorage.getItem("dfr_token"), S = tok ? lire(tok) : null;
+$("#compte").innerHTML = S ? `<span class="moi">${S.avatar?`<img src="${esc(S.avatar)}" alt="">`:""}<button class="btn sec sm" id="out">${esc(S.name)} · Déconnexion</button></span>` : `<a class="btn sm" href="${esc(CONFIG.WORKER)}/login">Connexion Steam</a>`;
+if (S) $("#out").onclick=()=>{ localStorage.removeItem("dfr_token"); location.hash=""; location.reload(); };
 
-let entreprises = [];
-function afficherCompte(){
-  const s = session(), z = $("#zone-compte");
-  if (!s) { z.innerHTML = `<a class="btn sec" href="${esc(CONFIG.WORKER)}/login">Se connecter avec Steam</a>`; return; }
-  z.innerHTML = `<button class="btn sec" id="btn-out" title="Se déconnecter">${esc(s.name)} · Déconnexion</button>`;
-  $("#btn-out").onclick = deconnexion;
+// ---- entreprises + équipe (données JSON)
+const json = u => fetch(u).then(r=>r.json());
+json("data/entreprises.json").then(list=>{
+  $("#st-e").textContent = list.length;
+  let mien=null;
+  if (S) for (const e of list){ const m=(e.membres||[]).find(m=>m.steamid===S.sid); if(m){ mien={e,grade:m.grade}; break; } }
+  if (S){ $("#carte").classList.add("on"); $("#c-av").src=S.avatar||""; $("#c-nom").textContent=S.name; $("#c-sid").textContent="Steam ID : "+S.sid; $("#c-ent").textContent = mien?`${mien.e.nom} – ${mien.grade}`:"Aucune entreprise liée à ce compte"; }
+  $("#ent").innerHTML = list.map(e=>`<article class="bloc${mien&&mien.e.id===e.id?" mine":""}"><h3>${esc(e.nom)}</h3><p>${esc(e.secteur)}</p><p>${esc(e.description)}</p><span class="tag${e.recrutement?"":" no"}">${e.recrutement?"Recrute":"Recrutement fermé"}</span></article>`).join("");
+}).catch(()=>{ $("#ent").innerHTML=`<p>Liste indisponible.</p>`; });
+json("data/equipe.json").then(l=>{ $("#staff").innerHTML=l.map(m=>`<article class="bloc staff"><div class="av">${esc(m.nom[0])}</div><h3>${esc(m.nom)}</h3><small>${esc(m.role)}</small></article>`).join(""); }).catch(()=>{});
+// ---- espace staff (connexion + planning)
+const JOURS=["Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"];
+let AD = JSON.parse(sessionStorage.getItem("dfr_admin")||"null"), PLAN=[], SV={actifs:[],moi:false,log:[]};
+async function api(path,opt={}){
+  const r=await fetch(CONFIG.WORKER+path,{...opt,headers:{"Content-Type":"application/json",...(AD?{Authorization:"Bearer "+AD.token}:{})}});
+  const d=await r.json().catch(()=>({})); if(r.status===401&&AD&&path!=="/admin/login"){ sortir(); }
+  if(!r.ok) throw new Error(d.error||"Erreur de connexion au serveur"); return d; }
+function sortir(){ sessionStorage.removeItem("dfr_admin"); AD=null; PLAN=[]; espace(); }
+const peutEditer=()=>AD&&(AD.role==="fondateur"||AD.role==="cofondateur");
+const ROLES={fondateur:"Fondateur",cofondateur:"Co-fondateur",staff:"Staff"};
+function espace(err){
+  const z=$("#espace-zone");
+  if(!AD){ z.innerHTML=`<form class="log" id="f-login"><label>Identifiant<input name="login" autocomplete="username" required></label><label>Mot de passe<input name="password" type="password" autocomplete="current-password" required></label><p class="err" id="err">${esc(err||"")}</p><button class="btn">Se connecter</button></form>`;
+    $("#f-login").onsubmit=async e=>{ e.preventDefault(); const f=e.target; try{ AD=await api("/admin/login",{method:"POST",body:JSON.stringify({login:f.login.value,password:f.password.value})}); sessionStorage.setItem("dfr_admin",JSON.stringify(AD)); charger(); }catch(x){ espace(x.message); } }; return; }
+  z.innerHTML=`<div class="top"><span>Connecté : <b>${esc(AD.name)}</b> · ${esc(ROLES[AD.role]||AD.role)}</span><button class="btn sec sm" id="deco">Déconnexion</button></div>
+  <div id="svc-zone"></div>
+  <h3>Planning du staff</h3><div class="plan">${JOURS.map(j=>`<div class="jour"><h3>${j}</h3>${PLAN.filter(c=>c.jour===j).sort((a,b)=>a.debut.localeCompare(b.debut)).map(c=>`<div class="cr"><b>${esc(c.debut)}–${esc(c.fin)}</b>${esc(c.staff)}${c.note?`<small> · ${esc(c.note)}</small>`:""}${peutEditer()?`<button data-del="${esc(c.id)}" aria-label="Supprimer ce créneau">×</button>`:""}</div>`).join("")||"<small>—</small>"}</div>`).join("")}</div>
+  ${peutEditer()?`<form class="ajout" id="f-add"><label>Jour<select name="jour">${JOURS.map(j=>`<option>${j}</option>`).join("")}</select></label><label>Membre du staff<input name="staff" maxlength="40" required></label><label>Début<input name="debut" type="time" required></label><label>Fin<input name="fin" type="time" required></label><label>Note<input name="note" maxlength="80"></label><button class="btn">Ajouter</button></form><p class="err" id="err">${esc(err||"")}</p>`:`<p class="lead">Seuls le fondateur et le co-fondateur peuvent modifier le planning.</p>`}`;
+  $("#deco").onclick=sortir; zoneService();
+  z.querySelectorAll("[data-del]").forEach(b=>b.onclick=async()=>{ try{ PLAN=await api("/planning?id="+encodeURIComponent(b.dataset.del),{method:"DELETE"}); espace(); }catch(x){ espace(x.message); } });
+  if($("#f-add")) $("#f-add").onsubmit=async e=>{ e.preventDefault(); const f=e.target; try{ PLAN=await api("/planning",{method:"POST",body:JSON.stringify({jour:f.jour.value,staff:f.staff.value,debut:f.debut.value,fin:f.fin.value,note:f.note.value})}); espace(); }catch(x){ espace(x.message); } };
 }
-function maCarriere(){
-  const s = session(); if (!s) return null;
-  for (const e of entreprises){ const m=(e.membres||[]).find(m=>m.steamid===s.sid); if (m) return {entreprise:e, grade:m.grade}; }
-  return null;
+const duree=ms=>{ const m=Math.max(0,Math.round(ms/60000)); return m>=60?`${Math.floor(m/60)} h ${String(m%60).padStart(2,"0")}`:`${m} min`; };
+const hhmm=t=>new Date(t).toLocaleString("fr-FR",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"});
+function zoneService(){
+  const z=$("#svc-zone"); if(!z) return;
+  z.innerHTML=`<div class="top"><h3 style="margin:0">Service</h3><span>${SV.moi?"<b style='color:#7ce0a8'>● Vous êtes en service</b>":"<b style='color:var(--doux)'>○ Vous êtes hors service</b>"}</span><button class="btn ${SV.moi?"sec":""}" id="svc">${SV.moi?"Me mettre hors service":"Me mettre en service"}</button></div>
+  <div class="grille" style="margin-bottom:1.5rem"><div class="bloc"><h3>En service maintenant (${SV.actifs.length})</h3>${SV.actifs.map(a=>`<p><b>${esc(a.name)}</b> · depuis ${duree(Date.now()-a.since)}</p>`).join("")||"<p>Personne pour le moment.</p>"}</div>
+  ${peutEditer()?`<div class="bloc"><h3>Derniers services</h3>${SV.log.slice(0,8).map(l=>`<p>${esc(l.name)} · ${hhmm(l.debut)} → ${hhmm(l.fin)} · ${duree(l.minutes*60000)}${l.auto?" (clôture auto)":""}</p>`).join("")||"<p>Aucun historique.</p>"}</div>`:""}</div>`;
+  $("#svc").onclick=async()=>{ try{ SV=await api("/service",{method:"POST",body:JSON.stringify({action:SV.moi?"off":"on"})}); zoneService(); }catch(x){ alert(x.message); } };
 }
-function afficherCarte(){
-  const s = session(); if (!s) return;
-  $("#carte-nom").textContent = s.name;
-  $("#carte-sid").textContent = "Steam ID : " + s.sid;
-  if (s.avatar){ const p=$("#carte-photo"); p.style.backgroundImage=`url("${s.avatar}")`; p.textContent=""; }
-  const c = maCarriere();
-  $("#carte-ent").textContent = c ? `${c.entreprise.nom} – ${c.grade}` : "Aucune entreprise liée à ce compte";
-}
-function afficherEntreprises(){
-  const c = maCarriere(), s = session();
-  $("#ent-moi").innerHTML = !s ? `<div class="bloc" style="margin-bottom:1rem"><h3>Retrouvez votre entreprise</h3><p>Connectez votre compte Steam pour voir votre entreprise et votre grade.</p><a class="btn" href="${esc(CONFIG.WORKER)}/login">Se connecter avec Steam</a></div>`
-    : c ? `<div class="bloc moi" style="margin-bottom:1rem"><h3>Votre entreprise : ${esc(c.entreprise.nom)}</h3><p>Grade : ${esc(c.grade)}</p></div>`
-    : `<div class="bloc" style="margin-bottom:1rem"><h3>Vous n'avez pas encore d'entreprise</h3><p>Choisissez une entreprise qui recrute ci-dessous et postulez sur le Discord.</p></div>`;
-  $("#ent-liste").innerHTML = entreprises.length ? entreprises.map(e => `<article class="bloc${c&&c.entreprise.id===e.id?" moi":""}"><h3>${esc(e.nom)}</h3><p>${esc(e.secteur)}</p><p>${esc(e.description)}</p><span class="tag${e.recrutement?"":" ferme"}">${e.recrutement?"Recrute":"Recrutement fermé"}</span></article>`).join("") : `<p class="note">Aucune entreprise pour le moment.</p>`;
-}
-fetch("data/entreprises.json").then(r=>r.json()).then(d=>{ entreprises=d; afficherCarte(); afficherEntreprises(); }).catch(()=>{ $("#ent-liste").innerHTML=`<p class="note">Impossible de charger la liste des entreprises.</p>`; });
-
-// ---- onglets (routage par #)
-function route(){
-  const page = "/" + (location.hash.replace(/^#\/?/,"").split("/")[0] || "");
-  const cible = document.querySelector(`section[data-page="${page}"]`) ? page : "/";
-  document.querySelectorAll("section[data-page]").forEach(s => s.hidden = s.dataset.page !== cible);
-  document.querySelectorAll("nav a").forEach(a => { const h="/"+a.getAttribute("href").replace(/^#\/?/,""); a.toggleAttribute("aria-current", h===cible); if(h===cible) a.setAttribute("aria-current","page"); });
-  window.scrollTo(0,0);
-}
-addEventListener("hashchange", route); afficherCompte(); afficherCarte(); route();
+setInterval(()=>{ if(AD) api("/service").then(s=>{ SV=s; zoneService(); }).catch(()=>{}); },60000);
+async function charger(){ try{ PLAN=await api("/planning"); SV=await api("/service"); espace(); }catch(x){ AD?espace(x.message):espace(); } }
+AD?charger():espace();
 </script>
 </body>
 </html>

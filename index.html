@@ -86,7 +86,7 @@ input,select{background:#0b1526;border:1px solid var(--ligne);border-radius:10px
 .cr b{display:block}.cr small{color:var(--doux)}.cr button{position:absolute;top:2px;right:4px;background:0;border:0;color:#ff9b9b;font-size:1.1rem;cursor:pointer}
 .ajout{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.6rem;margin-top:1.2rem;align-items:end}
 @media(max-width:820px){.plan{grid-template-columns:repeat(7,150px)}}
-[hidden]{display:none!important}nav a[aria-current=page]{background:var(--n2);color:#fff;box-shadow:inset 0 -2px 0 var(--rouge)}
+[hidden]{display:none!important}#jserr{position:fixed;left:0;right:0;bottom:0;z-index:50;background:#7a1f1f;color:#fff;padding:.6rem 1rem;font:500 .85rem monospace}nav a[aria-current=page]{background:var(--n2);color:#fff;box-shadow:inset 0 -2px 0 var(--rouge)}
 .tabs{display:flex;gap:.5rem;margin-bottom:1.2rem;flex-wrap:wrap}.tabs button{background:var(--n2);border:1px solid var(--ligne);color:var(--txt);padding:.5rem 1rem;border-radius:99px;font:600 .9rem "Public Sans",sans-serif;cursor:pointer}.tabs button.on{background:var(--bleu);border-color:var(--bleu)}
 .ent-top{display:flex;gap:.9rem;align-items:center;margin-bottom:.6rem}.ent-top h3{margin:0}.logo-e{width:56px;height:56px;border-radius:12px;object-fit:cover;background:#0b1526;flex:none}
 .logo-e.ph{display:grid;place-items:center;font:800 1.4rem "Bricolage Grotesque",sans-serif;background:linear-gradient(135deg,var(--bleu),var(--rouge))}.tag+.tag{margin-left:.4rem}
@@ -177,6 +177,7 @@ textarea{background:#0b1526;border:1px solid var(--ligne);border-radius:10px;col
 <div class="appel" data-page="/"><div><h2>Prêt à écrire ton histoire ?</h2><p>Rejoins la communauté DayFranceRp et lance-toi dans l'aventure.</p><a class="btn sec" id="d2" target="_blank" rel="noopener">Rejoindre le Discord</a></div></div>
 <footer>DayFranceRp – serveur communautaire, non affilié à Nova Life ni à Valve.</footer>
 
+<div id="jserr" hidden></div>
 <script>
 /* ====== À MODIFIER ====== */
 const CONFIG = {
@@ -187,7 +188,7 @@ const CONFIG = {
   PHOTOS: [
     { img: "images/1.jpg", titre: "Le centre-ville au crépuscule" },
     { img: "images/2.jpg", titre: "Balade devant la Tour Eiffel" },
-    { img: "images/3.jpg", titre: "les ancienne versiosn de nova life" },
+    { img: "images/3.jpg", titre: "Le staff devant la mairie" },
     { img: "images/4.jpg", titre: "Rues et parking du village" },
     { img: "images/5.jpg", titre: "Travail à la ferme" },
     { img: "images/6.jpg", titre: "Soirée entre joueurs" }
@@ -199,6 +200,19 @@ const esc = t => String(t ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt
 $("#d1").href = $("#d2").href = CONFIG.DISCORD;
 addEventListener("scroll", () => $("#haut").classList.toggle("plein", scrollY > 30), {passive:true});
 
+addEventListener("error",e=>{ const b=document.getElementById("jserr"); if(b){ b.hidden=false; b.textContent="Erreur du site : "+e.message+" (ligne "+e.lineno+")"; } });
+addEventListener("unhandledrejection",e=>{ const b=document.getElementById("jserr"); if(b){ b.hidden=false; b.textContent="Erreur du site : "+(e.reason&&e.reason.message||e.reason); } });
+
+// ---- pages (une par catégorie)
+const TITRES={"/":"DayFranceRp – Serveur Serious RP sur Nova Life","/serveur":"Le serveur","/galerie":"Galerie","/entreprises":"Entreprises","/rejoindre":"Nous rejoindre","/equipe":"L'équipe","/faq":"FAQ","/espace":"Espace staff"};
+function route(){
+  let p=location.hash.replace(/^#/,""); if(!TITRES[p]) p="/";
+  document.querySelectorAll("[data-page]").forEach(s=>s.hidden=s.dataset.page!==p);
+  document.querySelectorAll("nav a").forEach(a=>a.getAttribute("href")==="#"+p?a.setAttribute("aria-current","page"):a.removeAttribute("aria-current"));
+  document.title=p==="/"?TITRES[p]:TITRES[p]+" · DayFranceRp"; scrollTo(0,0); }
+addEventListener("hashchange",route); route();
+</script>
+<script>
 // ---- diaporama + galerie (image manquante = décor de secours)
 const P = CONFIG.PHOTOS;
 $("#slides").innerHTML = P.map((p,i)=>`<div class="slide g${i%4}" role="img" aria-label="${esc(p.titre)}"></div>`).join("");
@@ -220,18 +234,24 @@ $("#pts").onclick=e=>{ if(e.target.dataset.i){ aller(+e.target.dataset.i); auto(
 aller(0); auto();
 
 fetch(CONFIG.WORKER+"/service/public").then(r=>r.json()).then(d=>{ if(typeof d.count==="number"){ $("#badge-staff").hidden=false; $("#badge-staff span").textContent=d.count?`${d.count} staff en service`:"Aucun staff en service"; } }).catch(()=>{});
+</script>
+<script>
 // ---- compteurs Discord
 fetch(`https://discord.com/api/v9/invites/${CONFIG.DISCORD_CODE}?with_counts=true`).then(r=>r.json()).then(d=>{
   if (d.approximate_member_count){ $("#st-m").textContent=d.approximate_member_count.toLocaleString("fr-FR"); $("#st-o").textContent=d.approximate_presence_count.toLocaleString("fr-FR"); $("#badge-txt").textContent=`${d.approximate_presence_count} joueurs en ligne sur le Discord`; }
 }).catch(()=>{});
 
+</script>
+<script>
 // ---- session Steam
 function lire(t){ try{ const p=JSON.parse(decodeURIComponent(escape(atob(t.split(".")[0].replace(/-/g,"+").replace(/_/g,"/"))))); return p.exp*1000>Date.now()?p:null; }catch{ return null; } }
-if (location.hash.startsWith("#/auth/")){ const t=location.hash.slice(7); if(lire(t)) localStorage.setItem("dfr_token",t); history.replaceState(null,"",location.pathname+"#/entreprises"); }
-const tok = localStorage.getItem("dfr_token"), S = tok ? lire(tok) : null;
+if (location.hash.startsWith("#/auth/")){ const t=location.hash.slice(7); if(lire(t)) try{ localStorage.setItem("dfr_token",t); }catch{} history.replaceState(null,"",location.pathname+"#/entreprises"); }
+const tok = (()=>{ try{ return localStorage.getItem("dfr_token"); }catch{ return null; } })(), S = tok ? lire(tok) : null;
 $("#compte").innerHTML = S ? `<span class="moi">${S.avatar?`<img src="${esc(S.avatar)}" alt="">`:""}<button class="btn sec sm" id="out">${esc(S.name)} · Déconnexion</button></span>` : `<a class="btn sm" href="${esc(CONFIG.WORKER)}/login">Connexion Steam</a>`;
-if (S) $("#out").onclick=()=>{ localStorage.removeItem("dfr_token"); location.hash="#/"; location.reload(); };
+if (S) $("#out").onclick=()=>{ try{ localStorage.removeItem("dfr_token"); }catch{} location.hash="#/"; location.reload(); };
 
+</script>
+<script>
 // ---- entreprises + équipe (données JSON)
 const json = u => fetch(u).then(r=>r.json());
 let ENT=[], MIEN=null;
@@ -251,22 +271,24 @@ async function chargeEnt(){
   renderEnt(); }
 chargeEnt();
 json("data/equipe.json").then(l=>{ $("#staff").innerHTML=l.map(m=>`<article class="bloc staff"><div class="av">${esc(m.nom[0])}</div><h3>${esc(m.nom)}</h3><small>${esc(m.role)}</small></article>`).join(""); }).catch(()=>{});
+</script>
+<script>
 // ---- espace staff (connexion + planning)
 const JOURS=["Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"];
-let AD = JSON.parse(sessionStorage.getItem("dfr_admin")||"null"), PLAN=[], SV={actifs:[],moi:false,log:[]};
+let AD = (()=>{ try{ return JSON.parse(sessionStorage.getItem("dfr_admin")||"null"); }catch{ return null; } })(), PLAN=[], SV={actifs:[],moi:false,log:[]};
 async function api(path,opt={}){
   if(CONFIG.WORKER.includes("VOTRE-COMPTE")) throw new Error("Adresse du worker non renseignée : modifiez CONFIG.WORKER dans index.html.");
   const r=await fetch(CONFIG.WORKER+path,{...opt,headers:{"Content-Type":"application/json",...(AD?{Authorization:"Bearer "+AD.token}:{})}}).catch(()=>{ throw new Error("Impossible de joindre le worker Cloudflare. Vérifiez CONFIG.WORKER et que le worker est bien déployé."); });
   const d=await r.json().catch(()=>({})); if(r.status===401&&AD&&path!=="/admin/login"){ sortir(); }
   if(!r.ok) throw new Error(d.error||("Erreur du serveur (code "+r.status+")")); return d; }
-function sortir(){ sessionStorage.removeItem("dfr_admin"); AD=null; PLAN=[]; espace(); }
+function sortir(){ try{ sessionStorage.removeItem("dfr_admin"); }catch{} AD=null; PLAN=[]; espace(); }
 const peutEditer=()=>AD&&(AD.role==="fondateur"||AD.role==="cofondateur");
 const ROLES={fondateur:"Fondateur",cofondateur:"Co-fondateur",staff:"Staff"};
 let ETAB="planning", EDIT=null, ENTF=null;
 function espace(err){
   const z=$("#espace-zone");
   if(!AD){ z.innerHTML=`<form class="log" id="f-login"><label>Identifiant<input name="login" autocomplete="username" required></label><label>Mot de passe<input name="password" type="password" autocomplete="current-password" required></label><p class="err" id="err">${esc(err||"")}</p><button class="btn">Se connecter</button></form>`;
-    $("#f-login").onsubmit=async e=>{ e.preventDefault(); const f=e.target; try{ AD=await api("/admin/login",{method:"POST",body:JSON.stringify({login:f.login.value,password:f.password.value})}); sessionStorage.setItem("dfr_admin",JSON.stringify(AD)); charger(); }catch(x){ espace(x.message); } }; return; }
+    $("#f-login").onsubmit=async e=>{ e.preventDefault(); const f=e.target; try{ AD=await api("/admin/login",{method:"POST",body:JSON.stringify({login:f.login.value,password:f.password.value})}); try{ sessionStorage.setItem("dfr_admin",JSON.stringify(AD)); }catch{} charger(); }catch(x){ espace(x.message); } }; return; }
   z.innerHTML=`<div class="top"><span>Connecté : <b>${esc(AD.name)}</b> · ${esc(ROLES[AD.role]||AD.role)}</span><button class="btn sec sm" id="deco">Déconnexion</button></div>
   <div class="tabs"><button data-tab="planning" class="${ETAB==="planning"?"on":""}">Service et planning</button><button data-tab="entreprises" class="${ETAB==="entreprises"?"on":""}">Entreprises</button></div><div id="tab-zone"></div>`;
   $("#deco").onclick=sortir;
@@ -335,14 +357,6 @@ setInterval(()=>{ if(AD) api("/service").then(s=>{ SV=s; zoneService(); }).catch
 async function charger(){ try{ PLAN=await api("/planning"); SV=await api("/service"); espace(); }catch(x){ AD?espace(x.message):espace(); } }
 AD?charger():espace();
 
-// ---- pages (une par catégorie)
-const TITRES={"/":"DayFranceRp – Serveur Serious RP sur Nova Life","/serveur":"Le serveur","/galerie":"Galerie","/entreprises":"Entreprises","/rejoindre":"Nous rejoindre","/equipe":"L'équipe","/faq":"FAQ","/espace":"Espace staff"};
-function route(){
-  let p=location.hash.replace(/^#/,""); if(!TITRES[p]) p="/";
-  document.querySelectorAll("[data-page]").forEach(s=>s.hidden=s.dataset.page!==p);
-  document.querySelectorAll("nav a").forEach(a=>a.getAttribute("href")==="#"+p?a.setAttribute("aria-current","page"):a.removeAttribute("aria-current"));
-  document.title=p==="/"?TITRES[p]:TITRES[p]+" · DayFranceRp"; scrollTo(0,0); }
-addEventListener("hashchange",route); route();
 </script>
 </body>
 </html>

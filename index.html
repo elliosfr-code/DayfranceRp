@@ -180,14 +180,14 @@ textarea{background:#0b1526;border:1px solid var(--ligne);border-radius:10px;col
 <script>
 /* ====== À MODIFIER ====== */
 const CONFIG = {
-  DISCORD: "https://discord.gg/KZtA4bPqcR",   // lien d'invitation
-  DISCORD_CODE: "KZtA4bPqcR",                  // la partie après discord.gg/ (pour les compteurs)
+  DISCORD: "https://discord.gg/h3XNWDVSy7",   // lien d'invitation
+  DISCORD_CODE: "h3XNWDVSy7",                  // la partie après discord.gg/ (pour les compteurs)
   WORKER: "dayfrance-auth.elliosfr.workers.dev",
   // Vos captures d'écran : déposez-les dans le dossier images/ puis listez-les ici
   PHOTOS: [
     { img: "images/1.jpg", titre: "Le centre-ville au crépuscule" },
     { img: "images/2.jpg", titre: "Balade devant la Tour Eiffel" },
-    { img: "images/3.jpg", titre: "Le staff devant la mairie" },
+    { img: "images/3.jpg", titre: "les ancienne versiosn de nova life" },
     { img: "images/4.jpg", titre: "Rues et parking du village" },
     { img: "images/5.jpg", titre: "Travail à la ferme" },
     { img: "images/6.jpg", titre: "Soirée entre joueurs" }
@@ -258,7 +258,7 @@ async function api(path,opt={}){
   if(CONFIG.WORKER.includes("VOTRE-COMPTE")) throw new Error("Adresse du worker non renseignée : modifiez CONFIG.WORKER dans index.html.");
   const r=await fetch(CONFIG.WORKER+path,{...opt,headers:{"Content-Type":"application/json",...(AD?{Authorization:"Bearer "+AD.token}:{})}}).catch(()=>{ throw new Error("Impossible de joindre le worker Cloudflare. Vérifiez CONFIG.WORKER et que le worker est bien déployé."); });
   const d=await r.json().catch(()=>({})); if(r.status===401&&AD&&path!=="/admin/login"){ sortir(); }
-  if(!r.ok) throw new Error(d.error||("Erreur du serveur (code "+r.status+")"); return d; }
+  if(!r.ok) throw new Error(d.error||("Erreur du serveur (code "+r.status+")")); return d; }
 function sortir(){ sessionStorage.removeItem("dfr_admin"); AD=null; PLAN=[]; espace(); }
 const peutEditer=()=>AD&&(AD.role==="fondateur"||AD.role==="cofondateur");
 const ROLES={fondateur:"Fondateur",cofondateur:"Co-fondateur",staff:"Staff"};

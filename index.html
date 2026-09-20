@@ -86,7 +86,10 @@ input,select{background:#0b1526;border:1px solid var(--ligne);border-radius:10px
 .cr b{display:block}.cr small{color:var(--doux)}.cr button{position:absolute;top:2px;right:4px;background:0;border:0;color:#ff9b9b;font-size:1.1rem;cursor:pointer}
 .ajout{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.6rem;margin-top:1.2rem;align-items:end}
 @media(max-width:820px){.plan{grid-template-columns:repeat(7,150px)}}
-[hidden]{display:none!important}#jserr{position:fixed;left:0;right:0;bottom:0;z-index:50;background:#7a1f1f;color:#fff;padding:.6rem 1rem;font:500 .85rem monospace}nav a[aria-current=page]{background:var(--n2);color:#fff;box-shadow:inset 0 -2px 0 var(--rouge)}
+[hidden]{display:none!important}#modal{position:fixed;inset:0;z-index:40;background:#050b16d9;display:grid;place-items:center;padding:1rem;overflow:auto}
+.mbox{background:var(--n2);border:1px solid var(--ligne);border-radius:16px;padding:1.5rem;max-width:720px;width:100%;max-height:92vh;overflow:auto}.mbox h2{font-size:1.6rem}.note{color:var(--doux);font-size:.9rem}
+.ipbox{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;margin:-1rem 0 2rem;color:var(--doux)}.ipbox code{background:#0b1526cc;border:1px solid #ffffff30;border-radius:8px;padding:.35rem .7rem;color:#fff;font-size:1rem}
+.tag.warn{background:#3d2f10;color:#ffcf66}#jserr{position:fixed;left:0;right:0;bottom:0;z-index:50;background:#7a1f1f;color:#fff;padding:.6rem 1rem;font:500 .85rem monospace}nav a[aria-current=page]{background:var(--n2);color:#fff;box-shadow:inset 0 -2px 0 var(--rouge)}
 .tabs{display:flex;gap:.5rem;margin-bottom:1.2rem;flex-wrap:wrap}.tabs button{background:var(--n2);border:1px solid var(--ligne);color:var(--txt);padding:.5rem 1rem;border-radius:99px;font:600 .9rem "Public Sans",sans-serif;cursor:pointer}.tabs button.on{background:var(--bleu);border-color:var(--bleu)}
 .ent-top{display:flex;gap:.9rem;align-items:center;margin-bottom:.6rem}.ent-top h3{margin:0}.logo-e{width:56px;height:56px;border-radius:12px;object-fit:cover;background:#0b1526;flex:none}
 .logo-e.ph{display:grid;place-items:center;font:800 1.4rem "Bricolage Grotesque",sans-serif;background:linear-gradient(135deg,var(--bleu),var(--rouge))}.tag+.tag{margin-left:.4rem}
@@ -109,10 +112,13 @@ textarea{background:#0b1526;border:1px solid var(--ligne);border-radius:10px;col
   <div class="hc">
     <span class="badge"><b></b><span id="badge-txt">Serveur Serious RP · Nova Life</span></span>
     <span class="badge" id="badge-staff" hidden style="margin-left:.5rem"><b></b><span></span></span>
+    <span class="badge" id="badge-joueurs" hidden style="margin-left:.5rem"><b></b><span></span></span>
     <h1>Day<i>France</i>Rp</h1>
     <p class="sub">Un roleplay sérieux, des entreprises vivantes et une communauté francophone qui écrit son histoire depuis plus de 5 ans d'expérience sur Nova Life.</p>
     <div class="cta"><a class="btn" href="#/rejoindre">Nous rejoindre</a><a class="btn sec" id="d1" target="_blank" rel="noopener">Rejoindre le Discord</a></div>
+    <div class="ipbox"><span>IP du serveur Nova Life</span><code class="ip-txt"></code><button class="btn sec sm ip-copy" type="button">Copier</button></div>
     <div class="stats">
+      <div><b id="st-j">—</b><span>joueurs en jeu</span></div>
       <div><b id="st-m">—</b><span>membres Discord</span></div>
       <div><b id="st-o">—</b><span>en ligne</span></div>
       <div><b id="st-e">—</b><span>entreprises</span></div>
@@ -140,7 +146,8 @@ textarea{background:#0b1526;border:1px solid var(--ligne);border-radius:10px;col
 
 <section class="s" id="entreprises" data-page="/entreprises">
   <h2>Entreprises</h2><p class="lead">Les entreprises du serveur. Connectez votre compte Steam pour retrouver la vôtre.</p>
-  <div class="carte" id="carte"><img id="c-av" alt=""><div><b id="c-nom"></b><small id="c-sid"></small><small id="c-ent"></small></div></div>
+  <div class="carte" id="carte"><img id="c-av" alt=""><div><b id="c-nom"></b><small id="c-sid"></small><small id="c-ent"></small><button class="btn sm" id="c-edit" type="button" hidden style="margin-top:.5rem">Ma fiche personnage</button></div></div>
+  <div id="patron-zone"></div>
   <div class="grille" id="ent"></div>
 </section>
 
@@ -151,8 +158,9 @@ textarea{background:#0b1526;border:1px solid var(--ligne);border-radius:10px;col
     <li><b>Rejoindre le Discord</b><span>Annonces, support et candidatures.</span></li>
     <li><b>Lire le règlement</b><span>Indispensable en Serious RP.</span></li>
     <li><b>Entretien avec le staff</b><span>Un court échange vocal.</span></li>
-    <li><b>Entrer en jeu</b><span>Créez votre personnage et postulez à une entreprise.</span></li>
+    <li><b>Rejoindre le serveur</b><span>Dans Nova Life, cherchez « DayFranceRp » ou connectez-vous avec l'IP ci-dessous. Créez ensuite votre personnage RP sur ce site (connexion Steam).</span></li>
   </ol>
+  <div class="ipbox" style="margin:1.5rem 0 0"><span>IP du serveur</span><code class="ip-txt"></code><button class="btn sec sm ip-copy" type="button">Copier</button></div>
 </section>
 
 <section class="s" id="equipe" data-page="/equipe">
@@ -177,6 +185,7 @@ textarea{background:#0b1526;border:1px solid var(--ligne);border-radius:10px;col
 <div class="appel" data-page="/"><div><h2>Prêt à écrire ton histoire ?</h2><p>Rejoins la communauté DayFranceRp et lance-toi dans l'aventure.</p><a class="btn sec" id="d2" target="_blank" rel="noopener">Rejoindre le Discord</a></div></div>
 <footer>DayFranceRp – serveur communautaire, non affilié à Nova Life ni à Valve.</footer>
 
+<div id="modal" hidden><div class="mbox" id="mbox"></div></div>
 <div id="jserr" hidden></div>
 <script>
 /* ====== À MODIFIER ====== */
@@ -184,6 +193,8 @@ const CONFIG = {
   DISCORD: "https://discord.gg/h3XNWDVSy7",   // lien d'invitation
   DISCORD_CODE: "h3XNWDVSy7",                  // la partie après discord.gg/ (pour les compteurs)
   WORKER: "https://dayfrance-auth.elliosfr.workers.dev",
+  SERVER_IP: "151.242.159.4",
+  SERVER_PORT: "2899",
   // Vos captures d'écran : déposez-les dans le dossier images/ puis listez-les ici
   PHOTOS: [
     { img: "images/1.jpg", titre: "Le centre-ville au crépuscule" },
@@ -252,16 +263,85 @@ if (S) $("#out").onclick=()=>{ try{ localStorage.removeItem("dfr_token"); }catch
 
 </script>
 <script>
+// ---- joueurs en ligne, adresse du serveur, fiche personnage, reprise, espace patron
+let PERSO=null;
+const wOk=()=>!CONFIG.WORKER.includes("VOTRE-COMPTE");
+const hdr=()=>({"Content-Type":"application/json",Authorization:"Bearer "+tok});
+document.querySelectorAll(".ip-txt").forEach(e=>e.textContent=CONFIG.SERVER_IP+":"+CONFIG.SERVER_PORT);
+document.querySelectorAll(".ip-copy").forEach(b=>b.onclick=async()=>{ try{ await navigator.clipboard.writeText(CONFIG.SERVER_IP+":"+CONFIG.SERVER_PORT); b.textContent="Copié !"; }catch{ b.textContent="Copiez-la à la main"; } setTimeout(()=>b.textContent="Copier",2000); });
+async function majJoueurs(){
+  if(!wOk()) return;
+  try{ const d=await (await fetch(CONFIG.WORKER+"/joueurs")).json(); const bj=$("#badge-joueurs");
+    bj.hidden=false; bj.querySelector("span").textContent=d.online?`${d.joueurs}/${d.max} joueurs en ligne`:"Serveur hors ligne ou non listé";
+    bj.querySelector("b").style.background=d.online?"#3ddc84":"#8a8f99"; bj.querySelector("b").style.boxShadow=d.online?"0 0 0 4px #3ddc8433":"none";
+    $("#st-j").textContent=d.online?`${d.joueurs}/${d.max}`:"—";
+  }catch{} }
+majJoueurs(); setInterval(majJoueurs,30000);
+
+function openModal(html){ $("#mbox").innerHTML=html; $("#modal").hidden=false;
+  const c=$("#m-close"); if(c) c.onclick=closeModal;
+  const o=$("#m-out"); if(o) o.onclick=()=>{ try{ localStorage.removeItem("dfr_token"); }catch{} location.hash="#/"; location.reload(); }; }
+function closeModal(){ $("#modal").hidden=true; $("#mbox").innerHTML=""; }
+async function envoyer(path,body){ const r=await fetch(CONFIG.WORKER+path,{method:"POST",headers:hdr(),body:JSON.stringify(body)}); const d=await r.json().catch(()=>({})); if(!r.ok) throw new Error(d.error||("Erreur du serveur (code "+r.status+")")); return d; }
+
+function formPerso(edit){
+  const p=PERSO||{}, L=edit?" disabled":"", v=k=>esc(p[k]||"");
+  openModal(`<h2>${edit?"Ma fiche personnage":"Créez votre personnage RP"}</h2><p class="note">${edit?"Le nom, la naissance et le sexe ne se modifient qu'avec l'accord du staff.":"Avant d'aller plus loin, créez le personnage que vous jouerez sur DayFranceRp. Ces informations sont celles de votre citoyen."}</p>
+  <form id="f-perso" class="fent">
+  <label>Prénom RP<input name="prenom" maxlength="30" required value="${v("prenom")}"${L}></label>
+  <label>Nom RP<input name="nom" maxlength="30" required value="${v("nom")}"${L}></label>
+  <label>Date de naissance RP<input name="naissance" type="date" min="1925-01-01" max="2010-12-31" required value="${v("naissance")}"${L}></label>
+  <label>Lieu de naissance<input name="lieuNaissance" maxlength="40" required value="${v("lieuNaissance")}"${L}></label>
+  <label>Sexe<select name="sexe"${L}>${["Homme","Femme","Autre"].map(s=>`<option${p.sexe===s?" selected":""}>${s}</option>`).join("")}</select></label>
+  <label>Nationalité<input name="nationalite" maxlength="30" required value="${esc(p.nationalite||"Française")}"${L}></label>
+  <label>Lieu de résidence RP<input name="residence" maxlength="60" required placeholder="Ex : Amboise, rue de la Mairie" value="${v("residence")}"></label>
+  <label>Profession / métier RP<input name="profession" maxlength="40" value="${v("profession")}"></label>
+  <label class="large">Histoire du personnage (facultatif)<textarea name="histoire" maxlength="500" rows="4">${v("histoire")}</textarea></label>
+  <p class="err large" id="perso-err"></p>
+  <div class="large"><button class="btn">${edit?"Enregistrer":"Créer mon personnage"}</button> ${edit?`<button type="button" class="btn sec" id="m-close">Annuler</button>`:`<button type="button" class="btn sec" id="m-out">Me déconnecter</button>`}</div></form>`);
+  $("#f-perso").onsubmit=async ev=>{ ev.preventDefault(); const e=ev.target.elements, o={}; ["prenom","nom","naissance","lieuNaissance","sexe","nationalite","residence","profession","histoire"].forEach(k=>o[k]=e[k].value);
+    try{ PERSO=await envoyer("/mon-personnage",o); closeModal(); if(typeof renderEnt==="function") renderEnt(); }catch(x){ $("#perso-err").textContent=x.message; } };
+}
+async function chargePerso(){
+  if(!S||!wOk()) return;
+  try{ const r=await fetch(CONFIG.WORKER+"/mon-personnage",{headers:hdr()}); if(r.ok){ const d=await r.json(); if(d.prenom) PERSO=d; else formPerso(false); } }catch{}
+  if(typeof renderEnt==="function") renderEnt(); }
+$("#c-edit").onclick=()=>formPerso(true);
+
+function formReprise(id){
+  const e=ENT.find(x=>x.id===id); if(!e) return;
+  openModal(`<h2>Reprise de ${esc(e.nom)}</h2><p class="note">Expliquez pourquoi vous voulez reprendre cette entreprise. Le patron et le staff verront votre candidature.</p><form id="f-rep" class="log" style="max-width:none"><label>Votre message<textarea name="message" maxlength="300" rows="4" required></textarea></label><p class="err" id="rep-err"></p><div><button class="btn">Envoyer ma candidature</button> <button type="button" class="btn sec" id="m-close">Annuler</button></div></form>`);
+  $("#f-rep").onsubmit=async ev=>{ ev.preventDefault(); try{ await envoyer("/reprise",{ent:id,message:ev.target.elements.message.value}); closeModal(); alert("Candidature envoyée !"); }catch(x){ $("#rep-err").textContent=x.message; } };
+}
+$("#ent").addEventListener("click",ev=>{ const b=ev.target.closest("[data-rep]"); if(b) formReprise(b.dataset.rep); });
+
+async function renderPatron(){
+  const z=$("#patron-zone"); if(!z) return;
+  const e=MIEN&&MIEN.patron?ENT.find(x=>x.id===MIEN.id):null;
+  if(!e){ z.innerHTML=""; return; }
+  const bt=(k,on,a,b)=>`<button class="btn sm${on?"":" sec"}" data-p="${k}" type="button">${on?a:b}</button>`;
+  z.innerHTML=`<div class="bloc mine" style="margin-bottom:1rem"><h3>Gérer mon entreprise : ${esc(e.nom)}</h3><p>Vous êtes ${esc(MIEN.grade)}. Ces réglages sont visibles par tous les citoyens.</p>
+  <div style="display:flex;gap:.6rem;flex-wrap:wrap">${bt("statut",e.statut!=="fermee","Ouverte · Fermer","Fermée · Ouvrir")}${bt("recrutement",!!e.recrutement,"Recrutement ouvert · Fermer","Recrutement fermé · Ouvrir")}${bt("aReprendre",!!e.aReprendre,"À reprendre · Retirer","Mettre à reprendre")}</div>
+  <p class="err" id="p-err"></p><div id="cands"></div></div>`;
+  z.querySelectorAll("[data-p]").forEach(b=>b.onclick=async()=>{ const k=b.dataset.p, o={};
+    if(k==="statut") o.statut=e.statut==="fermee"?"ouverte":"fermee"; if(k==="recrutement") o.recrutement=!e.recrutement; if(k==="aReprendre") o.aReprendre=!e.aReprendre;
+    try{ Object.assign(e,await envoyer("/patron/entreprise",o)); renderEnt(); }catch(x){ $("#p-err").textContent=x.message; } });
+  try{ const l=await (await fetch(CONFIG.WORKER+"/patron/reprises",{headers:hdr()})).json();
+    if(Array.isArray(l)&&l.length&&$("#cands")) $("#cands").innerHTML=`<h3 style="margin-top:1rem">Candidatures à la reprise (${l.length})</h3>`+l.map(c=>`<p><b>${esc(c.nom)}</b> · ${new Date(c.date).toLocaleDateString("fr-FR")}<br><small>${esc(c.message)}</small></p>`).join(""); }catch{}
+}
+chargePerso();
+</script>
+<script>
 // ---- entreprises + équipe (données JSON)
 const json = u => fetch(u).then(r=>r.json());
 let ENT=[], MIEN=null;
 function carteEnt(e){ const ouv=e.statut!=="fermee";
-  return `<article class="bloc${MIEN&&MIEN.id===e.id?" mine":""}"><div class="ent-top">${e.logo?`<img class="logo-e" src="${esc(e.logo)}" alt="Logo ${esc(e.nom)}">`:`<div class="logo-e ph">${esc((e.nom||"?")[0])}</div>`}<div><h3>${esc(e.nom)}</h3><small style="color:var(--doux)">${esc(e.secteur)}</small></div></div><p>${esc(e.bio||e.description)}</p><span class="tag${ouv?"":" no"}">${ouv?"Ouverte":"Fermée"}</span><span class="tag${e.recrutement?"":" no"}">${e.recrutement?"Recrute":"Recrutement fermé"}</span></article>`; }
+  return `<article class="bloc${MIEN&&MIEN.id===e.id?" mine":""}"><div class="ent-top">${e.logo?`<img class="logo-e" src="${esc(e.logo)}" alt="Logo ${esc(e.nom)}">`:`<div class="logo-e ph">${esc((e.nom||"?")[0])}</div>`}<div><h3>${esc(e.nom)}</h3><small style="color:var(--doux)">${esc(e.secteur)}</small></div></div><p>${esc(e.bio||e.description)}</p><span class="tag${ouv?"":" no"}">${ouv?"Ouverte":"Fermée"}</span><span class="tag${e.recrutement?"":" no"}">${e.recrutement?"Recrute":"Recrutement fermé"}</span>${e.aReprendre?`<span class="tag warn">À reprendre</span>`:""}${e.aReprendre?(S&&PERSO?`<p><button class="btn sm" data-rep="${esc(e.id)}" type="button">Postuler à la reprise</button></p>`:`<p class="note">Connectez-vous avec Steam pour postuler à la reprise.</p>`):""}</article>`; }
 function renderEnt(){
   $("#st-e").textContent=ENT.length;
   const ord=[...ENT].sort((a,b)=>(a.statut==="fermee")-(b.statut==="fermee")||String(a.nom).localeCompare(b.nom));
   $("#ent").innerHTML=ord.map(carteEnt).join("")||`<p class="lead">Aucune entreprise pour le moment.</p>`;
-  if(S){ $("#carte").classList.add("on"); $("#c-av").src=S.avatar||""; $("#c-nom").textContent=S.name; $("#c-sid").textContent="Steam ID : "+S.sid; $("#c-ent").textContent=MIEN?`${MIEN.nom} – ${MIEN.grade}`:"Aucune entreprise liée à ce compte"; } }
+  if(S){ $("#carte").classList.add("on"); $("#c-av").src=S.avatar||""; $("#c-nom").textContent=PERSO?PERSO.prenom+" "+PERSO.nom:S.name; $("#c-sid").textContent="Steam : "+S.name+" · "+S.sid; $("#c-ent").textContent=MIEN?`${MIEN.nom} – ${MIEN.grade}`:"Aucune entreprise liée à ce compte"; $("#c-edit").hidden=!PERSO; } if(typeof renderPatron==="function") renderPatron(); }
 async function chargeEnt(){
   const okW=!CONFIG.WORKER.includes("VOTRE-COMPTE");
   try{ if(!okW) throw 0; const r=await fetch(CONFIG.WORKER+"/entreprises"); if(!r.ok) throw 0; ENT=await r.json(); }
@@ -290,10 +370,10 @@ function espace(err){
   if(!AD){ z.innerHTML=`<form class="log" id="f-login"><label>Identifiant<input name="login" autocomplete="username" required></label><label>Mot de passe<input name="password" type="password" autocomplete="current-password" required></label><p class="err" id="err">${esc(err||"")}</p><button class="btn">Se connecter</button></form>`;
     $("#f-login").onsubmit=async e=>{ e.preventDefault(); const f=e.target; try{ AD=await api("/admin/login",{method:"POST",body:JSON.stringify({login:f.login.value,password:f.password.value})}); try{ sessionStorage.setItem("dfr_admin",JSON.stringify(AD)); }catch{} charger(); }catch(x){ espace(x.message); } }; return; }
   z.innerHTML=`<div class="top"><span>Connecté : <b>${esc(AD.name)}</b> · ${esc(ROLES[AD.role]||AD.role)}</span><button class="btn sec sm" id="deco">Déconnexion</button></div>
-  <div class="tabs"><button data-tab="planning" class="${ETAB==="planning"?"on":""}">Service et planning</button><button data-tab="entreprises" class="${ETAB==="entreprises"?"on":""}">Entreprises</button></div><div id="tab-zone"></div>`;
+  <div class="tabs"><button data-tab="planning" class="${ETAB==="planning"?"on":""}">Service et planning</button><button data-tab="entreprises" class="${ETAB==="entreprises"?"on":""}">Entreprises</button><button data-tab="citoyens" class="${ETAB==="citoyens"?"on":""}">Citoyens</button></div><div id="tab-zone"></div>`;
   $("#deco").onclick=sortir;
-  z.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{ ETAB=b.dataset.tab; EDIT=null; espace(); });
-  ETAB==="planning"?vuePlanning(err):vueEntreprises(err);
+  z.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{ ETAB=b.dataset.tab; EDIT=null; if(ETAB==="citoyens") CIT=null; espace(); });
+  ETAB==="planning"?vuePlanning(err):ETAB==="entreprises"?vueEntreprises(err):vueCitoyens(err);
 }
 function vuePlanning(err){
   const t=$("#tab-zone");
@@ -317,9 +397,10 @@ async function vueEntreprises(err){
   if(!ENTF){ t.innerHTML="<p class='lead'>Chargement…</p>"; try{ ENTF=await api("/entreprises?full=1"); }catch(x){ t.innerHTML=`<p class="err">${esc(x.message)}</p>`; return; } }
   if(EDIT!==null) return formEnt(err);
   t.innerHTML=`<div class="top"><span>${ENTF.length} entreprise(s)</span><button class="btn" id="ent-new">Ajouter une entreprise</button></div><p class="err">${esc(err||"")}</p>
-  ${ENTF.map(e=>{ const ouv=e.statut!=="fermee"; return `<div class="rowent">${vignette(e)}<div class="grow"><b>${esc(e.nom)}</b><small>${esc(e.secteur)}</small></div><span class="tag${ouv?"":" no"}">${ouv?"Ouverte":"Fermée"}</span><button class="btn sec sm" data-tog="${esc(e.id)}">${ouv?"Fermer":"Ouvrir"}</button><button class="btn sec sm" data-mod="${esc(e.id)}">Modifier</button>${peutEditer()?`<button class="btn sec sm" data-sup="${esc(e.id)}">Supprimer</button>`:""}</div>`; }).join("")||`<p class="lead">Aucune entreprise. Cliquez sur « Ajouter une entreprise ».</p>`}`;
+  ${ENTF.map(e=>{ const ouv=e.statut!=="fermee"; return `<div class="rowent">${vignette(e)}<div class="grow"><b>${esc(e.nom)}</b><small>${esc(e.secteur)}</small></div><span class="tag${ouv?"":" no"}">${ouv?"Ouverte":"Fermée"}</span>${e.aReprendre?`<span class="tag warn">À reprendre</span>`:""}<button class="btn sec sm" data-cand="${esc(e.id)}">Candidatures</button><button class="btn sec sm" data-tog="${esc(e.id)}">${ouv?"Fermer":"Ouvrir"}</button><button class="btn sec sm" data-mod="${esc(e.id)}">Modifier</button>${peutEditer()?`<button class="btn sec sm" data-sup="${esc(e.id)}">Supprimer</button>`:""}</div>`; }).join("")||`<p class="lead">Aucune entreprise. Cliquez sur « Ajouter une entreprise ».</p>`}`;
   const get=id=>ENTF.find(e=>e.id===id);
   $("#ent-new").onclick=()=>{ EDIT={}; vueEntreprises(); };
+  t.querySelectorAll("[data-cand]").forEach(b=>b.onclick=()=>voirCandidatures(b.dataset.cand));
   t.querySelectorAll("[data-mod]").forEach(b=>b.onclick=()=>{ EDIT=JSON.parse(JSON.stringify(get(b.dataset.mod))); vueEntreprises(); });
   t.querySelectorAll("[data-tog]").forEach(b=>b.onclick=async()=>{ const e=get(b.dataset.tog); try{ await sauver({...e,statut:e.statut==="fermee"?"ouverte":"fermee"}); vueEntreprises(); }catch(x){ vueEntreprises(x.message); } });
   t.querySelectorAll("[data-sup]").forEach(b=>b.onclick=async()=>{ const e=get(b.dataset.sup); if(!confirm(`Supprimer définitivement « ${e.nom} » ?`)) return; try{ ENTF=await api("/entreprises?id="+encodeURIComponent(e.id),{method:"DELETE"}); ENT=ENTF.map(({membres,...x})=>x); renderEnt(); vueEntreprises(); }catch(x){ vueEntreprises(x.message); } });
@@ -331,6 +412,7 @@ function formEnt(err){
   <label>Secteur<input name="secteur" maxlength="40" placeholder="Ex : Secours, Commerce" value="${esc(e.secteur||"")}"></label>
   <label>Statut<select name="statut"><option value="ouverte"${e.statut!=="fermee"?" selected":""}>Ouverte</option><option value="fermee"${e.statut==="fermee"?" selected":""}>Fermée</option></select></label>
   <label class="chk"><input type="checkbox" name="recrutement"${e.recrutement?" checked":""}> Recrutement ouvert</label>
+  <label class="chk"><input type="checkbox" name="aReprendre"${e.aReprendre?" checked":""}> Entreprise à reprendre</label>
   <label class="large">Bio / présentation<textarea name="bio" maxlength="600" rows="5">${esc(e.bio||e.description||"")}</textarea></label>
   <div class="large"><b>Logo</b><div class="lg-zone"><div id="lg-prev">${vignette(e)}</div><input type="file" id="lg-file" accept="image/*"><button type="button" class="btn sec sm" id="lg-del">Retirer le logo</button></div></div>
   <label class="large">Membres (un par ligne : SteamID64, grade)<textarea name="membres" rows="3" placeholder="76561198000000000, Chef">${esc((e.membres||[]).map(m=>m.steamid+", "+m.grade).join("\n"))}</textarea></label>
@@ -341,7 +423,7 @@ function formEnt(err){
   $("#ent-annul").onclick=()=>{ EDIT=null; vueEntreprises(); };
   $("#f-ent").onsubmit=async ev=>{ ev.preventDefault(); const f=ev.target;
     const membres=f.membres.value.split("\n").map(l=>l.trim()).filter(Boolean).map(l=>{ const [s,...g]=l.split(/[,\s]+/); return {steamid:s,grade:g.join(" ")}; });
-    EDIT={...e,nom:f.nom.value,secteur:f.secteur.value,statut:f.statut.value,recrutement:f.recrutement.checked,bio:f.bio.value,membres};
+    EDIT={...e,nom:f.nom.value,secteur:f.secteur.value,statut:f.statut.value,recrutement:f.recrutement.checked,aReprendre:f.aReprendre.checked,bio:f.bio.value,membres};
     try{ await sauver(EDIT); EDIT=null; vueEntreprises(); }catch(x){ formEnt(x.message); } };
 }
 const duree=ms=>{ const m=Math.max(0,Math.round(ms/60000)); return m>=60?`${Math.floor(m/60)} h ${String(m%60).padStart(2,"0")}`:`${m} min`; };
@@ -355,6 +437,19 @@ function zoneService(){
 }
 setInterval(()=>{ if(AD) api("/service").then(s=>{ SV=s; zoneService(); }).catch(()=>{}); },60000);
 async function charger(){ try{ PLAN=await api("/planning"); SV=await api("/service"); espace(); }catch(x){ AD?espace(x.message):espace(); } }
+let CIT=null;
+async function voirCandidatures(id){
+  try{ const l=await api("/reprises?ent="+encodeURIComponent(id));
+    openModal(`<h2>Candidatures à la reprise</h2>${l.map(c=>`<p><b>${esc(c.nom)}</b> · ${new Date(c.date).toLocaleDateString("fr-FR")}<br><small>${esc(c.message)}</small></p>`).join("")||"<p>Aucune candidature pour le moment.</p>"}<button class="btn sec" id="m-close" type="button">Fermer</button>`); }catch(x){ alert(x.message); } }
+async function vueCitoyens(err){
+  const t=$("#tab-zone");
+  if(!CIT){ t.innerHTML="<p class='lead'>Chargement…</p>"; try{ CIT=await api("/personnages"); }catch(x){ t.innerHTML=`<p class="err">${esc(x.message)}</p>`; return; } }
+  t.innerHTML=`<div class="top"><span>${CIT.length} citoyen(s) enregistré(s)</span><input id="cit-q" placeholder="Rechercher un nom…" style="max-width:260px"></div><p class="err">${esc(err||"")}</p><div id="cit-l"></div>`;
+  const liste=()=>{ const q=($("#cit-q").value||"").toLowerCase();
+    $("#cit-l").innerHTML=CIT.filter(c=>(c.prenom+" "+c.nom).toLowerCase().includes(q)).map(c=>`<div class="rowent"><div class="grow"><b>${esc(c.prenom)} ${esc(c.nom)}</b><small>${esc(c.residence)} · ${esc(c.profession||"sans profession")} · né(e) le ${esc(c.naissance)}</small><small>Steam ${esc(c.sid)}</small></div>${peutEditer()?`<button class="btn sec sm" data-supc="${esc(c.sid)}">Supprimer la fiche</button>`:""}</div>`).join("")||"<p class='lead'>Aucun citoyen.</p>";
+    document.querySelectorAll("[data-supc]").forEach(b=>b.onclick=async()=>{ if(!confirm("Supprimer cette fiche ? Le joueur devra recréer son personnage.")) return; try{ CIT=await api("/personnages?sid="+encodeURIComponent(b.dataset.supc),{method:"DELETE"}); vueCitoyens(); }catch(x){ vueCitoyens(x.message); } }); };
+  liste(); $("#cit-q").oninput=liste;
+}
 AD?charger():espace();
 
 </script>

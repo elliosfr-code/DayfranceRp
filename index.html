@@ -92,6 +92,7 @@ input,select{background:#0b1526;border:1px solid var(--ligne);border-radius:10px
 .tag.warn{background:#3d2f10;color:#ffcf66}#jserr{position:fixed;left:0;right:0;bottom:0;z-index:50;background:#7a1f1f;color:#fff;padding:.6rem 1rem;font:500 .85rem monospace}nav a[aria-current=page]{background:var(--n2);color:#fff;box-shadow:inset 0 -2px 0 var(--rouge)}
 .tabs{display:flex;gap:.5rem;margin-bottom:1.2rem;flex-wrap:wrap}.tabs button{background:var(--n2);border:1px solid var(--ligne);color:var(--txt);padding:.5rem 1rem;border-radius:99px;font:600 .9rem "Public Sans",sans-serif;cursor:pointer}.tabs button.on{background:var(--bleu);border-color:var(--bleu)}
 .ent-top{display:flex;gap:.9rem;align-items:center;margin-bottom:.6rem}.ent-top h3{margin:0}.logo-e{width:56px;height:56px;border-radius:12px;object-fit:cover;background:#0b1526;flex:none}
+.jrn-img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:10px;margin-bottom:.7rem;background:#0b1526}
 .logo-e.ph{display:grid;place-items:center;font:800 1.4rem "Bricolage Grotesque",sans-serif;background:linear-gradient(135deg,var(--bleu),var(--rouge))}.tag+.tag{margin-left:.4rem}
 .rowent{display:flex;gap:.7rem;align-items:center;flex-wrap:wrap;background:var(--n2);border:1px solid var(--ligne);border-radius:12px;padding:.7rem 1rem;margin-bottom:.6rem}.rowent .grow{flex:1;min-width:160px}.rowent small{display:block;color:var(--doux)}.rowent .tag{margin:0}
 .fent{display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:760px}.fent .large{grid-column:1/-1}.fent label{display:grid;gap:.3rem;font-weight:500}.fent .chk{display:flex;align-items:center;gap:.5rem;align-self:end}.fent .chk input{width:auto}
@@ -348,7 +349,7 @@ async function chargeJournal(){
   try{
     if(CONFIG.WORKER.includes("VOTRE-COMPTE")) throw new Error("Le journal n'est pas encore configuré.");
     const l=await (await fetch(CONFIG.WORKER+"/journal")).json();
-    z.innerHTML=l.length?l.map(a=>`<article class="bloc" style="margin-bottom:1rem"><h3>${esc(a.titre)}</h3><small class="note">${fmtDate(a.date)} · ${esc(a.auteur)}</small><p style="white-space:pre-wrap;margin-top:.6rem">${esc(a.texte)}</p></article>`).join(""):`<p class="lead">Aucun article pour le moment. Revenez bientôt !</p>`;
+    z.innerHTML=l.length?`<div class="grille">`+l.map(a=>`<article class="bloc jrn-carte">${a.image?`<img class="jrn-img" src="${esc(a.image)}" alt="${esc(a.titre)}">`:""}<h3>${esc(a.titre)}</h3><small class="note">${fmtDate(a.date)} · ${esc(a.auteur)}</small>${a.texte?`<p style="white-space:pre-wrap;margin-top:.4rem">${esc(a.texte)}</p>`:""}</article>`).join("")+`</div>`:`<p class="lead">Aucun article pour le moment. Revenez bientôt !</p>`;
   }catch(x){ z.innerHTML=`<p class="err">${esc(x.message)}</p>`; }
 }
 chargeJournal();
@@ -408,12 +409,14 @@ function vuePlanning(err){
 // ---- gestion des entreprises
 const vignette=e=>e.logo?`<img class="logo-e" src="${esc(e.logo)}" alt="">`:`<div class="logo-e ph">${esc((e.nom||"?")[0])}</div>`;
 async function sauver(o){ ENTF=await api("/entreprises",{method:"POST",body:JSON.stringify(o)}); ENT=ENTF.map(({membres,...e})=>e); renderEnt(); }
-function logoDepuis(file){ return new Promise((ok,ko)=>{ const r=new FileReader(), im=new Image();
+function imageDepuis(file,maxDim,maxLen,messTropLourd){ return new Promise((ok,ko)=>{ const r=new FileReader(), im=new Image();
   r.onerror=()=>ko(new Error("Lecture du fichier impossible."));
-  r.onload=()=>{ im.onload=()=>{ const s=Math.min(1,200/Math.max(im.width,im.height)), c=document.createElement("canvas"); c.width=Math.round(im.width*s); c.height=Math.round(im.height*s); c.getContext("2d").drawImage(im,0,0,c.width,c.height);
-      let d=c.toDataURL("image/webp",.85); if(!d.startsWith("data:image/webp")) d=c.toDataURL("image/png"); d.length>140000?ko(new Error("Logo trop lourd, choisissez une image plus simple.")):ok(d); };
+  r.onload=()=>{ im.onload=()=>{ const s=Math.min(1,maxDim/Math.max(im.width,im.height)), c=document.createElement("canvas"); c.width=Math.round(im.width*s); c.height=Math.round(im.height*s); c.getContext("2d").drawImage(im,0,0,c.width,c.height);
+      let d=c.toDataURL("image/webp",.85); if(!d.startsWith("data:image/webp")) d=c.toDataURL("image/png"); d.length>maxLen?ko(new Error(messTropLourd)):ok(d); };
     im.onerror=()=>ko(new Error("Ce fichier n'est pas une image valide.")); im.src=r.result; };
   r.readAsDataURL(file); }); }
+function logoDepuis(file){ return imageDepuis(file,200,140000,"Logo trop lourd, choisissez une image plus simple."); }
+function journalImgDepuis(file){ return imageDepuis(file,1400,480000,"Image trop lourde, choisissez-en une plus légère."); }
 async function vueEntreprises(err){
   const t=$("#tab-zone");
   if(!ENTF){ t.innerHTML="<p class='lead'>Chargement…</p>"; try{ ENTF=await api("/entreprises?full=1"); }catch(x){ t.innerHTML=`<p class="err">${esc(x.message)}</p>`; return; } }
@@ -471,10 +474,18 @@ let JRN=null;
 async function vueJournal(err){
   const t=$("#tab-zone");
   if(!JRN){ t.innerHTML="<p class='lead'>Chargement…</p>"; try{ JRN=await api("/journal"); }catch(x){ t.innerHTML=`<p class="err">${esc(x.message)}</p>`; return; } }
+  let img="";
   t.innerHTML=`<div class="top"><span>${JRN.length} article(s)</span></div>
-  <form id="f-jrn" class="fent" style="margin-bottom:1.5rem"><label class="large">Titre<input name="titre" maxlength="80" required></label><label class="large">Texte<textarea name="texte" rows="5" maxlength="4000" required></textarea></label><p class="err large">${esc(err||"")}</p><div class="large"><button class="btn">Publier</button></div></form>
-  ${JRN.map(a=>`<div class="rowent"><div class="grow"><b>${esc(a.titre)}</b><small>${fmtDate(a.date)} · ${esc(a.auteur)}</small></div>${peutEditer()?`<button class="btn sec sm" data-supj="${esc(a.id)}">Supprimer</button>`:""}</div>`).join("")||"<p class='lead'>Aucun article.</p>"}`;
-  $("#f-jrn").onsubmit=async ev=>{ ev.preventDefault(); const e=ev.target.elements; try{ JRN=await api("/journal",{method:"POST",body:JSON.stringify({titre:e.titre.value,texte:e.texte.value})}); chargeJournal(); vueJournal(); }catch(x){ vueJournal(x.message); } };
+  <form id="f-jrn" class="fent" style="margin-bottom:1.5rem">
+  <label class="large">Titre<input name="titre" maxlength="80" required></label>
+  <div class="large"><b>Image de l'article (obligatoire)</b><div class="lg-zone"><div id="jrn-prev"></div><input type="file" id="jrn-file" accept="image/*"></div></div>
+  <label class="large">Légende (facultatif)<textarea name="texte" rows="3" maxlength="600"></textarea></label>
+  <p class="err large">${esc(err||"")}</p><div class="large"><button class="btn">Publier</button></div></form>
+  ${JRN.map(a=>`<div class="rowent">${a.image?`<img class="logo-e" src="${esc(a.image)}" alt="">`:`<div class="logo-e ph">${esc((a.titre||"?")[0])}</div>`}<div class="grow"><b>${esc(a.titre)}</b><small>${fmtDate(a.date)} · ${esc(a.auteur)}</small></div>${peutEditer()?`<button class="btn sec sm" data-supj="${esc(a.id)}">Supprimer</button>`:""}</div>`).join("")||"<p class='lead'>Aucun article.</p>"}`;
+  $("#jrn-file").onchange=async ev=>{ const f=ev.target.files[0]; if(!f) return; try{ img=await journalImgDepuis(f); $("#jrn-prev").innerHTML=`<img class="logo-e" src="${img}" alt="">`; }catch(x){ alert(x.message); } };
+  $("#f-jrn").onsubmit=async ev=>{ ev.preventDefault(); const e=ev.target.elements;
+    if(!img){ vueJournal("Ajoutez une image pour cet article."); return; }
+    try{ JRN=await api("/journal",{method:"POST",body:JSON.stringify({titre:e.titre.value,texte:e.texte.value,image:img})}); chargeJournal(); vueJournal(); }catch(x){ vueJournal(x.message); } };
   t.querySelectorAll("[data-supj]").forEach(b=>b.onclick=async()=>{ if(!confirm("Supprimer cet article ?")) return; try{ JRN=await api("/journal?id="+encodeURIComponent(b.dataset.supj),{method:"DELETE"}); chargeJournal(); vueJournal(); }catch(x){ vueJournal(x.message); } });
 }
 let CIT=null;
